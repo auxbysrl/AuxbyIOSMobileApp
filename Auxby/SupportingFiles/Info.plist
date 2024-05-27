@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.156615882044-mk6ccisj7h3k7v0rtogpn8q2i40rbppu</string>
+			</array>
+		</dict>
+	</array>
+	<key>GIDClientID</key>
+	<string>156615882044-mk6ccisj7h3k7v0rtogpn8q2i40rbppu.apps.googleusercontent.com</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Montserrat Black 900.ttf</string>
+		<string>Montserrat Black Italic 900.ttf</string>
+		<string>Montserrat Bold 700.ttf</string>
+		<string>Montserrat BoldItalic 700.ttf</string>
+		<string>Montserrat ExtraBold 800.ttf</string>
+		<string>Montserrat ExtraBoldItalic 800.ttf</string>
+		<string>Montserrat ExtraLight 275.ttf</string>
+		<string>Montserrat ExtraLightItalic 275.ttf</string>
+		<string>Montserrat Italic 400.ttf</string>
+		<string>Montserrat Light 300.ttf</string>
+		<string>Montserrat Medium 500.ttf</string>
+		<string>Montserrat LightItalic 300.ttf</string>
+		<string>Montserrat MediumItalic 500.ttf</string>
+		<string>Montserrat Regular 400.ttf</string>
+		<string>Montserrat SemiBold 600.ttf</string>
+		<string>Montserrat SemiBoldItalic 600.ttf</string>
+		<string>Montserrat Thin 250.ttf</string>
+		<string>Montserrat ThinItalic 250.ttf</string>
+	</array>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+		<key>UISceneConfigurations</key>
+		<dict>
+			<key>UIWindowSceneSessionRoleApplication</key>
+			<array>
+				<dict>
+					<key>UISceneConfigurationName</key>
+					<string>Default Configuration</string>
+					<key>UISceneDelegateClassName</key>
+					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
+					<key>UISceneStoryboardFile</key>
+					<string>Splash</string>
+				</dict>
+			</array>
+		</dict>
+	</dict>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<true/>
+</dict>
+</plist>

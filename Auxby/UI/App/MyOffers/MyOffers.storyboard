@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Montserrat-Bold.otf">
+            <string>Montserrat-Bold</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--My OffersVC-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="MyOffersVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Y6W-OH-hqX" customClass="MyOffersVC" customModule="Auxby" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc" userLabel="DefaultView">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="udw-Yx-UgM" userLabel="MainView">
+                                <rect key="frame" x="0.0" y="59" width="393" height="793"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VAC-na-K5n" userLabel="TopView">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nzt-3z-kdL">
+                                                <rect key="frame" x="16" y="11" width="30" height="22"/>
+                                                <color key="backgroundColor" name="white"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="30" id="4a8-Ge-hVm"/>
+                                                </constraints>
+                                                <color key="tintColor" name="textDark"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" image="chevron.backward" catalog="system"/>
+                                                <connections>
+                                                    <action selector="back:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="cAJ-Xg-hll"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cek-GT-7f3">
+                                                <rect key="frame" x="196.66666666666666" y="22" width="0.0" height="0.0"/>
+                                                <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="16"/>
+                                                <color key="textColor" name="textDark"/>
+                                                <nil key="highlightedColor"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="l10nText" value="myOffers"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" name="white"/>
+                                        <constraints>
+                                            <constraint firstItem="Cek-GT-7f3" firstAttribute="centerX" secondItem="VAC-na-K5n" secondAttribute="centerX" id="TLs-9I-PlM"/>
+                                            <constraint firstAttribute="height" constant="44" id="bFN-bD-0VH"/>
+                                            <constraint firstItem="Nzt-3z-kdL" firstAttribute="centerY" secondItem="VAC-na-K5n" secondAttribute="centerY" id="hv7-ak-ZeB"/>
+                                            <constraint firstItem="Cek-GT-7f3" firstAttribute="centerY" secondItem="VAC-na-K5n" secondAttribute="centerY" id="ssm-iN-hBs"/>
+                                            <constraint firstItem="Nzt-3z-kdL" firstAttribute="leading" secondItem="VAC-na-K5n" secondAttribute="leading" constant="16" id="xWs-6L-yO2"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xgz-NJ-hc8" customClass="SegmentControlView" customModule="Auxby" customModuleProvider="target">
+                                        <rect key="frame" x="16" y="60" width="361" height="30"/>
+                                        <color key="backgroundColor" name="white"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="Yk3-Ct-yu5"/>
+                                        </constraints>
+                                    </view>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zzr-tB-xhZ">
+                                        <rect key="frame" x="0.0" y="106" width="393" height="687"/>
+                                    </containerView>
+                                </subviews>
+                                <color key="backgroundColor" name="background"/>
+                                <constraints>
+                                    <constraint firstItem="xgz-NJ-hc8" firstAttribute="leading" secondItem="udw-Yx-UgM" secondAttribute="leading" constant="16" id="03a-Fa-m0S"/>
+                                    <constraint firstAttribute="bottom" secondItem="Zzr-tB-xhZ" secondAttribute="bottom" id="5JY-Wb-kLD"/>
+                                    <constraint firstAttribute="trailing" secondItem="Zzr-tB-xhZ" secondAttribute="trailing" id="Iqw-ZW-c0c"/>
+                                    <constraint firstAttribute="trailing" secondItem="xgz-NJ-hc8" secondAttribute="trailing" constant="16" id="TTo-q7-07e"/>
+                                    <constraint firstAttribute="trailing" secondItem="VAC-na-K5n" secondAttribute="trailing" id="W7G-qh-CJk"/>
+                                    <constraint firstItem="Zzr-tB-xhZ" firstAttribute="top" secondItem="xgz-NJ-hc8" secondAttribute="bottom" constant="16" id="aDq-E9-Zbd"/>
+                                    <constraint firstItem="xgz-NJ-hc8" firstAttribute="top" secondItem="VAC-na-K5n" secondAttribute="bottom" constant="16" id="eUe-rI-fZF"/>
+                                    <constraint firstItem="VAC-na-K5n" firstAttribute="top" secondItem="udw-Yx-UgM" secondAttribute="top" id="ehZ-W3-eOs"/>
+                                    <constraint firstItem="VAC-na-K5n" firstAttribute="leading" secondItem="udw-Yx-UgM" secondAttribute="leading" id="kQp-pi-ADF"/>
+                                    <constraint firstItem="Zzr-tB-xhZ" firstAttribute="leading" secondItem="udw-Yx-UgM" secondAttribute="leading" id="sZc-uY-DUo"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" name="white"/>
+                        <constraints>
+                            <constraint firstItem="udw-Yx-UgM" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="CHj-wg-PVH"/>
+                            <constraint firstItem="udw-Yx-UgM" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="Nh4-JZ-NWg"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="udw-Yx-UgM" secondAttribute="trailing" id="Wkt-Wg-StP"/>
+                            <constraint firstAttribute="bottom" secondItem="udw-Yx-UgM" secondAttribute="bottom" id="rBJ-Ky-ZYa"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="containerView" destination="Zzr-tB-xhZ" id="Gw6-Yu-oD2"/>
+                        <outlet property="segmentControl" destination="xgz-NJ-hc8" id="Kjc-kD-vuM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="132" y="-34"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="chevron.backward" catalog="system" width="97" height="128"/>
+        <namedColor name="background">
+            <color red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="textDark">
+            <color red="0.23137254901960785" green="0.29411764705882354" blue="0.32549019607843138" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="white">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

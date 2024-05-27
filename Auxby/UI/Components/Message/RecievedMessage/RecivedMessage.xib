@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Montserrat-Regular.otf">
+            <string>Montserrat-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RecivedMessageView" customModule="Auxby" customModuleProvider="target">
+            <connections>
+                <outlet property="defaultView" destination="iN0-l3-epB" id="3IH-Wg-ddD"/>
+                <outlet property="textLabel" destination="8Bw-HX-ibV" id="DAd-gS-Cuh"/>
+                <outlet property="timeLabel" destination="VxJ-Td-GLM" id="Ql4-N8-yWd"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" userLabel="DefaultView">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="105"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HkR-Ll-Y1S">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="105"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hdv-Fj-6M2">
+                            <rect key="frame" x="0.0" y="0.0" width="66.333333333333329" height="105"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Bw-HX-ibV">
+                                    <rect key="frame" x="16.000000000000004" y="9.9999999999999982" width="34.333333333333343" height="16.333333333333329"/>
+                                    <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="14"/>
+                                    <color key="textColor" name="textDark"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VxJ-Td-GLM">
+                                    <rect key="frame" x="36.666666666666664" y="31.333333333333336" width="19.666666666666664" height="68.666666666666657"/>
+                                    <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="8"/>
+                                    <color key="textColor" name="primaryLight"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" name="textLightBackground"/>
+                            <constraints>
+                                <constraint firstItem="8Bw-HX-ibV" firstAttribute="top" secondItem="hdv-Fj-6M2" secondAttribute="top" constant="10" id="5vS-Lj-9ZZ"/>
+                                <constraint firstAttribute="trailing" secondItem="VxJ-Td-GLM" secondAttribute="trailing" constant="10" id="IPc-Fg-ncK"/>
+                                <constraint firstAttribute="trailing" secondItem="8Bw-HX-ibV" secondAttribute="trailing" constant="16" id="SKi-Z8-Rvl"/>
+                                <constraint firstItem="VxJ-Td-GLM" firstAttribute="top" secondItem="8Bw-HX-ibV" secondAttribute="bottom" constant="5" id="WeI-iu-KRE"/>
+                                <constraint firstAttribute="bottom" secondItem="VxJ-Td-GLM" secondAttribute="bottom" constant="5" id="kSb-o3-DNT"/>
+                                <constraint firstItem="8Bw-HX-ibV" firstAttribute="leading" secondItem="hdv-Fj-6M2" secondAttribute="leading" constant="16" id="kjg-qL-Q0M"/>
+                            </constraints>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="12"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                    <color key="value" name="primaryLight"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                    <real key="value" value="0.0"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="hdv-Fj-6M2" firstAttribute="leading" secondItem="HkR-Ll-Y1S" secondAttribute="leading" id="Ntw-Wc-YxB"/>
+                        <constraint firstItem="hdv-Fj-6M2" firstAttribute="top" secondItem="HkR-Ll-Y1S" secondAttribute="top" id="VWe-m9-YnF"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hdv-Fj-6M2" secondAttribute="trailing" constant="50" id="kbH-Jo-dDL"/>
+                        <constraint firstAttribute="bottom" secondItem="hdv-Fj-6M2" secondAttribute="bottom" id="y5X-DK-jOm"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="HkR-Ll-Y1S" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="CPp-iR-uK3"/>
+                <constraint firstItem="HkR-Ll-Y1S" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="NPJ-ao-hsD"/>
+                <constraint firstAttribute="bottom" secondItem="HkR-Ll-Y1S" secondAttribute="bottom" id="WCW-W1-ybd"/>
+                <constraint firstAttribute="trailing" secondItem="HkR-Ll-Y1S" secondAttribute="trailing" id="g5v-uG-mjQ"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-60.305343511450381" y="-274.29577464788736"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="primaryLight">
+            <color red="0.29411764705882354" green="0.52549019607843139" blue="0.70588235294117652" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="textDark">
+            <color red="0.23137254901960785" green="0.29411764705882354" blue="0.32549019607843138" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="textLightBackground">
+            <color red="0.72899997234344482" green="0.74900001287460327" blue="0.80800002813339233" alpha="0.10000000149011612" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

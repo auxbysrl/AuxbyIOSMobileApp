@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "carbon_chat.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

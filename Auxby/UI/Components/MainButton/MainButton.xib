@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Montserrat-Bold.otf">
+            <string>Montserrat-Bold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainButtonView">
+            <connections>
+                <outlet property="button" destination="bb7-3P-ETh" id="XKQ-7f-wg9"/>
+                <outlet property="defaultView" destination="djc-Ez-JpV" id="yis-bi-1ha"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="djc-Ez-JpV" userLabel="DefaultView">
+            <rect key="frame" x="0.0" y="0.0" width="478" height="69"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ue0-KG-IvK" userLabel="ContentView">
+                    <rect key="frame" x="0.0" y="0.0" width="478" height="69"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bb7-3P-ETh" customClass="TransitionButton" customModule="TransitionButton">
+                            <rect key="frame" x="0.0" y="0.0" width="478" height="69"/>
+                            <color key="backgroundColor" name="primaryLight"/>
+                            <fontDescription key="fontDescription" name="Montserrat-Bold" family="Montserrat" pointSize="16"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal" title="Send email">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="8"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="color" keyPath="spinnerColor">
+                                    <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <variation key="heightClass=regular-widthClass=regular">
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="21"/>
+                            </variation>
+                            <connections>
+                                <action selector="buttonAction:" destination="-1" eventType="touchUpInside" id="9aM-4M-9rE"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="bb7-3P-ETh" secondAttribute="trailing" id="5wV-Up-cXP"/>
+                        <constraint firstAttribute="bottom" secondItem="bb7-3P-ETh" secondAttribute="bottom" id="ByT-nx-rWH"/>
+                        <constraint firstItem="bb7-3P-ETh" firstAttribute="leading" secondItem="Ue0-KG-IvK" secondAttribute="leading" id="QLJ-49-mMR"/>
+                        <constraint firstItem="bb7-3P-ETh" firstAttribute="top" secondItem="Ue0-KG-IvK" secondAttribute="top" id="jN0-kQ-fLk"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="Ue0-KG-IvK" secondAttribute="trailing" id="M1t-eR-1Qf"/>
+                <constraint firstItem="Ue0-KG-IvK" firstAttribute="leading" secondItem="djc-Ez-JpV" secondAttribute="leading" id="kS6-tk-i7i"/>
+                <constraint firstAttribute="bottom" secondItem="Ue0-KG-IvK" secondAttribute="bottom" id="rk5-lK-Nl3"/>
+                <constraint firstItem="Ue0-KG-IvK" firstAttribute="top" secondItem="djc-Ez-JpV" secondAttribute="top" id="tW5-yT-WD9"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="440.625" y="-446.875"/>
+        </view>
+    </objects>
+    <designables>
+        <designable name="bb7-3P-ETh">
+            <size key="intrinsicContentSize" width="94" height="32"/>
+        </designable>
+    </designables>
+    <resources>
+        <namedColor name="primaryLight">
+            <color red="0.29411764705882354" green="0.52549019607843139" blue="0.70588235294117652" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

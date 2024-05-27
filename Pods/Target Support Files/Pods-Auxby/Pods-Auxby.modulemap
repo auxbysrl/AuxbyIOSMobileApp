@@ -1,0 +1,6 @@
+framework module Pods_Auxby {
+  umbrella header "Pods-Auxby-umbrella.h"
+
+  export *
+  module * { export * }
+}

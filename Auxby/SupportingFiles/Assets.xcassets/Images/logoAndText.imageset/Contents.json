@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "ic_toolbar_logo.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

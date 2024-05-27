@@ -1,0 +1,10 @@
+tap "adoptopenjdk/openjdk"
+tap "homebrew/bundle"
+tap "homebrew/cask"
+tap "homebrew/core"
+brew "fastlane"
+brew "node", link: false
+brew "python@3.9"
+brew "ruby@2.7"
+cask "adoptopenjdk8"
+cask "react-native-debugger"

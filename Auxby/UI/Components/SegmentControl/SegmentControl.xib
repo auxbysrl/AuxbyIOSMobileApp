@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Montserrat Regular 400.ttf">
+            <string>Montserrat-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SegmentControlView" customModule="Auxby" customModuleProvider="target">
+            <connections>
+                <outlet property="defaultView" destination="iN0-l3-epB" id="27x-h1-pwU"/>
+                <outlet property="firstButton" destination="Wa0-Qs-3Rz" id="ZhQ-p3-tYg"/>
+                <outlet property="secondButton" destination="UdD-wV-YoG" id="WBw-Xf-ff6"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" userLabel="DefaultView">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="84"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OLQ-pm-ODA">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="84"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wa0-Qs-3Rz">
+                            <rect key="frame" x="0.0" y="0.0" width="196.66666666666666" height="84"/>
+                            <color key="backgroundColor" name="primaryLight"/>
+                            <accessibility key="accessibilityConfiguration" identifier="1"/>
+                            <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="15"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal">
+                                <color key="titleColor" name="white"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="8"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="string" keyPath="l10nTitle" value="activeA"/>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="buttonAction:" destination="-1" eventType="touchUpInside" id="69Z-jo-qqG"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UdD-wV-YoG">
+                            <rect key="frame" x="196.66666666666663" y="0.0" width="196.33333333333337" height="84"/>
+                            <color key="backgroundColor" name="white"/>
+                            <accessibility key="accessibilityConfiguration" identifier="2"/>
+                            <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="15"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <state key="normal">
+                                <color key="titleColor" name="primaryLight"/>
+                            </state>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="8"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="string" keyPath="l10nTitle" value="inactiveA"/>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="buttonAction:" destination="-1" eventType="touchUpInside" id="bTd-uA-kmA"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" name="white"/>
+                    <constraints>
+                        <constraint firstItem="Wa0-Qs-3Rz" firstAttribute="top" secondItem="OLQ-pm-ODA" secondAttribute="top" id="5wg-hF-6Jz"/>
+                        <constraint firstAttribute="bottom" secondItem="Wa0-Qs-3Rz" secondAttribute="bottom" id="ACN-xO-NtB"/>
+                        <constraint firstItem="Wa0-Qs-3Rz" firstAttribute="leading" secondItem="OLQ-pm-ODA" secondAttribute="leading" id="CKQ-ok-QUz"/>
+                        <constraint firstItem="UdD-wV-YoG" firstAttribute="leading" secondItem="Wa0-Qs-3Rz" secondAttribute="trailing" id="RVK-Qs-qus"/>
+                        <constraint firstAttribute="bottom" secondItem="UdD-wV-YoG" secondAttribute="bottom" id="Zpo-ld-OzM"/>
+                        <constraint firstItem="UdD-wV-YoG" firstAttribute="top" secondItem="OLQ-pm-ODA" secondAttribute="top" id="iTb-mX-6MK"/>
+                        <constraint firstItem="UdD-wV-YoG" firstAttribute="width" secondItem="Wa0-Qs-3Rz" secondAttribute="width" id="keP-vt-6tB"/>
+                        <constraint firstAttribute="trailing" secondItem="UdD-wV-YoG" secondAttribute="trailing" id="x2g-xo-NrG"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="8"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <color key="backgroundColor" name="background"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="OLQ-pm-ODA" secondAttribute="trailing" id="3cf-lC-cPp"/>
+                <constraint firstAttribute="bottom" secondItem="OLQ-pm-ODA" secondAttribute="bottom" id="Dga-FJ-UOZ"/>
+                <constraint firstItem="OLQ-pm-ODA" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Nh4-gm-6gj"/>
+                <constraint firstItem="OLQ-pm-ODA" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Y0Z-y6-DA4"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-37.404580152671755" y="-295.77464788732397"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="background">
+            <color red="0.97647058823529409" green="0.97647058823529409" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="primaryLight">
+            <color red="0.29411764705882354" green="0.52549019607843139" blue="0.70588235294117652" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="white">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

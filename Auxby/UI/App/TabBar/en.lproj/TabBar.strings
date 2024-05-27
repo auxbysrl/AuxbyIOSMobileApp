@@ -1,0 +1,24 @@
+
+/* Class = "UILabel"; text = "Favourite"; ObjectID = "4KE-Rn-rr2"; */
+"4KE-Rn-rr2.text" = "Favourite";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "H6b-hc-5VL"; */
+"H6b-hc-5VL.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "Tng-TI-t3Q"; */
+"Tng-TI-t3Q.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "gvk-c2-Kf7"; */
+"gvk-c2-Kf7.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "oQF-gS-F2P"; */
+"oQF-gS-F2P.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "My Bids"; ObjectID = "rIY-bY-gIU"; */
+"rIY-bY-gIU.text" = "My Bids";
+
+/* Class = "UILabel"; text = "Offers"; ObjectID = "wrS-ne-rwP"; */
+"wrS-ne-rwP.text" = "Offers";
+
+/* Class = "UILabel"; text = "Chat"; ObjectID = "yn4-RD-CeS"; */
+"yn4-RD-CeS.text" = "Chat";

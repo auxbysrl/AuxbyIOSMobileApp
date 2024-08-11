@@ -12,9 +12,9 @@ import UIKit
 enum ApiRequest {
     
     /// The base URL for all the requests
-    static let isProduction = true
-    static let baseURL = isProduction ? "auxby.ro" : "auxby-platform-2e7885bf6a1b.herokuapp.com"
-    static let baseURLForOffers = isProduction ? "auxby.ro" : "auxby-offer-management.herokuapp.com"
+    static let isProduction = false
+    static let baseURL = isProduction ? "auxby.ro" : "auxby.hypercode.ro"
+    static let baseURLForOffers = isProduction ? "auxby.ro" : "auxby.hypercode.ro"
   
     // USER
     case checkEmail(email: String)
@@ -24,6 +24,7 @@ enum ApiRequest {
     case login(email: String, pass: String)
     case logout
     case loginGoogle(token: String)
+    case loginApple(authCode: String, firstName: String, lastName: String)
     case getUser
     case updateUser(user: User)
     case delete
@@ -55,6 +56,8 @@ enum ApiRequest {
     case searchOffersWithFilter(search: SearchWithFilter)
     case getPromoted
     case promoteOffer(offerID: Int, expirationDate: String, requiredCoins: Int)
+    case getDeepLink(offerID: Int)
+    case getOwnerOffers(email: String, page: Int)
     
     // CHAT
     case startNewChat(offerId: Int)
@@ -65,11 +68,13 @@ enum ApiRequest {
     // NOTIFICATIONS
     case getAllNotifications
     case deleteNotification(id: Int)
+    case getCurrencies
+    case getAdds
     
     /// API method
     var method: HTTPMethod {
         switch self {
-        case .login, .forgotPassword, .create, .resendLink, .addOffer, .placeBid, .addOrRemoveFavorite, .loginGoogle, .reportOffer, .searchOffers, .searchOffersWithFilter, .startNewChat, .sendMessage, .saveApnsToken, .logout, .finishTransaction, .promoteOffer:
+        case .login, .forgotPassword, .create, .resendLink, .addOffer, .placeBid, .addOrRemoveFavorite, .loginGoogle, .reportOffer, .searchOffers, .searchOffersWithFilter, .startNewChat, .sendMessage, .saveApnsToken, .logout, .finishTransaction, .promoteOffer, .loginApple:
             return .post
         case .updateUser, .editOffer, .changeStatus, .changePassword:
             return .put
@@ -83,6 +88,9 @@ enum ApiRequest {
     /// API path
     var path: String {
         switch self {
+        case .getAdds: return "/api/v1/ads"
+        case .getDeepLink(let offerID): return "/api/v1/product/generate-deep-link/\(offerID)"
+        case .getCurrencies: return "/api/v1/application/currencies"
         case .promoteOffer(let offerID, _, _): return "/api/v1/product/\(offerID)/promote"
         case .getPromoted: return "/api/v1/product/promoted"
         case .finishTransaction: return "/api/v1/transaction"
@@ -98,7 +106,8 @@ enum ApiRequest {
         case .placeBid: return "/api/v1/product/bid"
         case .forgotPassword: return "/api/v1/auth/send-reset-password"
         case .searchOffers: return "/api/v1/product/search"
-        case .loginGoogle: return "/api/v1/auth/googleAuth"
+        case .loginGoogle: return "/api/v1/auth/google-authentication"
+        case .loginApple: return "/api/v1/auth/apple-authentication"
         case .getOffersByCategory: return "/api/v1/product"
         case .checkEmail: return "/api/v1/user/email/check"
         case .changePassword: return "/api/v1/user/password"
@@ -106,6 +115,7 @@ enum ApiRequest {
         case .getCategories: return "/api/v1/product/category"
         case .getOffersByIDs: return "/api/v1/product/getByIds"
         case .getOfferBy(let id, _): return "/api/v1/product/\(id)"
+        case .getOwnerOffers: return "/api/v1/product"
         case .getUserChats: return "/api/v1/chat"
         case .startNewChat: return "/api/v1/chat"
         case .deleteOffer(let id): return "/api/v1/product/\(id)"
@@ -138,6 +148,13 @@ enum ApiRequest {
         case .loginGoogle(let token):
             return [
                 "token": token
+            ]
+            
+        case .loginApple(let authCode, let firstName, let lastName):
+            return [
+                "authorizationCode": authCode,
+                "firstName": firstName,
+                "lastName": lastName
             ]
             
         case .changePassword(let oldPassword, let newPassword):
@@ -276,6 +293,14 @@ enum ApiRequest {
                 URLQueryItem(name: "sort", value: "publishDate,DESC")
             ]
             
+        case .getOwnerOffers(let email, let page):
+            return [
+                URLQueryItem(name: "page", value: "\(page)"),
+                URLQueryItem(name: "size", value: "10"),
+                URLQueryItem(name: "userName", value: email),
+                URLQueryItem(name: "sort", value: "publishDate,DESC")
+            ]
+            
         case .getOffersByIDs(let ids):
             var params: [URLQueryItem] = []
             ids.forEach {
@@ -299,7 +324,7 @@ enum ApiRequest {
         var host = ""
         var port = 0
         switch self {
-        case .getUserChats, .getMessages, .startNewChat, .sendMessage, .loginGoogle, .login, .create, .resendLink, .forgotPassword, .getAllNotifications, .deleteNotification, .getCategoriesDetails, .changePassword, .updateUser, .checkEmail, .getUser, .delete, .saveApnsToken, .logout, .finishTransaction, .reportOffer:
+        case .getUserChats, .getMessages, .startNewChat, .sendMessage, .loginGoogle, .login, .create, .resendLink, .forgotPassword, .getAllNotifications, .deleteNotification, .getCategoriesDetails, .changePassword, .updateUser, .checkEmail, .getUser, .delete, .saveApnsToken, .logout, .finishTransaction, .reportOffer, .getCurrencies, .loginApple, .getAdds:
             host = ApiRequest.baseURL
             port = 8080
         default: 
@@ -308,9 +333,7 @@ enum ApiRequest {
         }
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
-        if ApiRequest.isProduction {
-            urlComponents.port = port
-        }
+        urlComponents.port = port
         urlComponents.host = host
         urlComponents.queryItems = queryItems
         urlComponents.path = path

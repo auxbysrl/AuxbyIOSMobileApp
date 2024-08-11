@@ -231,22 +231,22 @@ class PreviewOrDetailsVC: UIViewController {
         switch sender.tag {
         case 1:
             if let url = URL(string: "https://www.facebook.com/profile.php?id=100095265410496") {
-                        if UIApplication.shared.canOpenURL(url) {
-                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                        }
-                    }
+                if UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+            }
         case 2:
             if let url = URL(string: "https://instagram.com/auxby.ro?igshid=MzRlODBiNWFlZA==") {
-                        if UIApplication.shared.canOpenURL(url) {
-                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                        }
-                    }
+                if UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+            }
         default:
             if let url = URL(string: "https://www.tiktok.com/@auxby.ro?_t=8gcajtfQkLp&_r=1") {
-                        if UIApplication.shared.canOpenURL(url) {
-                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                        }
-                    }
+                if UIApplication.shared.canOpenURL(url) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+            }
         }
     }
     
@@ -414,10 +414,10 @@ class PreviewOrDetailsVC: UIViewController {
     
     @IBAction func showBidList(_ sender: UIButton) {
         if let offer = vm.offer {
-            if let bids = offer.bids, let currencyType = offer.currencyType {
+            if let bids = offer.bids {
                 if !bids.isEmpty {
                     let biddersListVC = ListOfBiddersVC.asVC() as! ListOfBiddersVC
-                    biddersListVC.vm = ListOfBiddersVM(bids: bids.sorted(by: {$0.bidValue > $1.bidValue}), currencyType: currencyType)
+                    biddersListVC.vm = ListOfBiddersVM(bids: bids.sorted(by: {$0.bidValue > $1.bidValue}), currencySymbol: offer.currencySymbol ?? "")
                     presentVC(biddersListVC)
                 }
             }
@@ -426,6 +426,40 @@ class PreviewOrDetailsVC: UIViewController {
     
     @IBAction func showInfo(_ sender: UIButton) {
         UIAlert.showOneButton(message: "infoMessage".l10n())
+    }
+    
+    
+    @IBAction func shareOffer(_ sender: UIButton) {
+        if let offer = vm.offer {
+            if let urlString = offer.deepLink {
+                if urlString.isEmpty {
+                    vm.getDeepLink()
+                } else {
+                    guard let url = URL(string: urlString) else {
+                        print("Invalid URL")
+                        return
+                    }
+                    
+                    let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+                    
+                    // Exclude irrelevant activity types if necessary
+                    activityViewController.excludedActivityTypes = [.addToReadingList, .assignToContact, .print]
+                    
+                    // For iPad, configure the popover presentation controller
+                    if let popoverController = activityViewController.popoverPresentationController {
+                        popoverController.sourceView = self.view // Adjust sourceView to a relevant view in your app
+                        popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+                        popoverController.permittedArrowDirections = []
+                    }
+                    
+                    self.present(activityViewController, animated: true, completion: nil)
+                }
+                
+            } else {
+                vm.getDeepLink()
+            }
+        }
+        
     }
 }
 
@@ -444,6 +478,27 @@ private extension PreviewOrDetailsVC {
         setIsAction()
         setTopView()
         setWinnerView()
+        setUserView()
+    }
+    
+    func setUserView() {
+        if let offer = vm.offer {
+            if let user = vm.user {
+                if offer.owner?.userName != user.email {
+                    userView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showUserOffers)))
+                }
+            }
+        }
+    }
+    
+    @objc func showUserOffers() {
+        if let offer = vm.offer {
+            if let owner = offer.owner {
+                let userOffersVC = UserOffersVC.asVC() as! UserOffersVC
+                userOffersVC.vm = UserOffersVM(owner: owner)
+                pushVC(userOffersVC)
+            }
+        }
     }
     
     func setWinnerView() {
@@ -479,14 +534,56 @@ private extension PreviewOrDetailsVC {
     }
     
     func setObservable() {
+        NotifyCenter.observable(for: .updateUser).sink { [unowned self] in
+            vm.user = Offline.currentUser
+            setView()
+        }.store(in: &vm.cancellables)
+        
+        vm.$getDeepLinkState.sink { [unowned self] state in
+            state.setStateActivityIndicator(&indicator)
+            switch state {
+            case .succeed(let response):
+                guard let url = URL(string: response.url) else {
+                    print("Invalid URL")
+                    return
+                }
+                
+                let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+                
+                // Exclude irrelevant activity types if necessary
+                activityViewController.excludedActivityTypes = [.addToReadingList, .assignToContact, .print]
+                
+                // For iPad, configure the popover presentation controller
+                if let popoverController = activityViewController.popoverPresentationController {
+                    popoverController.sourceView = self.view // Adjust sourceView to a relevant view in your app
+                    popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+                    popoverController.permittedArrowDirections = []
+                }
+                
+                self.present(activityViewController, animated: true, completion: nil)
+            case .failed(let err):
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                }
+            default: break
+            }
+        }.store(in: &vm.cancellables)
         
         vm.$getAddToFavoriteState.sink { [unowned self] state in
             state.setStateActivityIndicator(&indicator)
             switch state {
             case .succeed:
                 vm.getOffer()
-            case .failed:
-                UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+            case .failed(let err):
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                }
             default: break
             }
         }.store(in: &vm.cancellables)
@@ -499,7 +596,12 @@ private extension PreviewOrDetailsVC {
                 conversationVC.vm = ConversationVM(chat: chat)
                 pushVC(conversationVC)
             case .failed(let err):
-                UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                }
                 print(err.localizedDescription)
             default:
                 break
@@ -515,7 +617,12 @@ private extension PreviewOrDetailsVC {
                 NotifyCenter.post(.updateOffers)
                 alert.isHidden = true
             case .failed(let err):
-                UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                }
                 print(err.localizedDescription)
             default: break
             }
@@ -529,7 +636,12 @@ private extension PreviewOrDetailsVC {
                 NotifyCenter.post(.updateOffers)
                 popVC()
             case .failed(let err):
-                UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                }
                 print(err.localizedDescription)
             default: break
             }
@@ -541,6 +653,7 @@ private extension PreviewOrDetailsVC {
             }
             switch state {
             case .succeed(let offer):
+                Offline.delete(key: .offerIdFromURL)
                 vm.isFirstTime = false
                 vm.needToView = false
                 vm.offer = offer
@@ -552,7 +665,7 @@ private extension PreviewOrDetailsVC {
                     self.testView.isHidden = true
                 }
             case .failed(let err):
-                if err.errorStatus == 400 {
+                if err.errorStatus == 404 {
                     UIAlert.showOneButton(message: "listingNotAvailable".l10n()) {
                         self.popVC()
                     }
@@ -576,7 +689,14 @@ private extension PreviewOrDetailsVC {
                     vm.publishedAction?()
                 }
             case .failed(let err):
-                UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                }
+                indicator?.hide()
+                indicator = nil
                 print(err.localizedDescription)
             default: break
             }
@@ -588,7 +708,12 @@ private extension PreviewOrDetailsVC {
                 Offline.encode(user, key: .currentUser)
                 vm.user = user
             case .failed(let err):
-                UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                }
                 print(err.localizedDescription)
             default: break
             }

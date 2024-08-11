@@ -47,7 +47,12 @@ private extension ActiveOffersVC {
                 cv.reloadData()
                 
             case .failed(let err):
-                UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                } 
                 print(err.localizedDescription)
             default: break
             }

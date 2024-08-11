@@ -112,7 +112,12 @@ private extension FilterVC {
                 NotifyCenter.post(.filterOffers)
                 dismissVC()
             case .failed(let err):
-                UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                }
                 print(err.localizedDescription)
             default:
                 break
@@ -438,8 +443,15 @@ private extension FilterVC {
     }
     
     func setInputs() {
-        let currencyTypes = ["lei".l10n(),
-                             "euro".l10n()]
+        var currenciesTypes: [String] = []
+        var allCurrencies: [Currency] = []
+        if let currencies = Offline.decode(key: .currencies, type: [Currency].self) {
+            for currency in currencies {
+                currenciesTypes.append(currency.symbol)
+            }
+            allCurrencies = currencies
+        }
+        
         
         if let search = Offline.decode(key: .currentSearch, type: SearchWithFilter.self) {
             var startPrice = ""
@@ -451,12 +463,17 @@ private extension FilterVC {
                                             type: .intNamed(""),
                                             inputText: startPrice,
                                             placeholder: "addOffer_price_placeholder".l10n(), canBeEmpty: true)
-            let currentCurrency = search.priceFilter!.currencyType == CurrencyType.ron.type ? "lei".l10n() : "euro".l10n()
-            let indexOfCurrency = currencyTypes.firstIndex(of: currentCurrency) ?? 0
-            startPriceInput.setupDropdown(dataSource: currencyTypes,selectedIndex: indexOfCurrency)
+            var currentCurrency = ""
+            if let currency = allCurrencies.first(where: { search.priceFilter!.currencyType == $0.name }) {
+                currentCurrency = currency.symbol
+            }
+            let indexOfCurrency = currenciesTypes.firstIndex(of: currentCurrency) ?? 0
+            startPriceInput.setupDropdown(dataSource: currenciesTypes,selectedIndex: indexOfCurrency)
             startPriceInput.actionAfterSet = { [unowned self] in
-                endPriceInput.setupDropdown(dataSource: currencyTypes, selectedIndex: currencyTypes.firstIndex(of: startPriceInput.selectedDropdownOption) ?? 0)
-                vm.currency =  startPriceInput.selectedDropdownOption == "lei".l10n() ? .ron : .euro
+                endPriceInput.setupDropdown(dataSource: currenciesTypes, selectedIndex: currenciesTypes.firstIndex(of: startPriceInput.selectedDropdownOption) ?? 0)
+                if let currentCurrency = allCurrencies.first(where: { $0.symbol == startPriceInput.selectedDropdownOption }) {
+                        vm.currency = currentCurrency.name
+                }
             }
             var endPrice = ""
             if let price = search.priceFilter?.highestPrice, price != 0.0 {
@@ -468,12 +485,16 @@ private extension FilterVC {
                                           type: .intNamed(""),
                                           inputText: endPrice,
                                           placeholder: "addOffer_price_placeholder".l10n(), canBeEmpty: true)
-            endPriceInput.setupDropdown(dataSource: currencyTypes, selectedIndex: indexOfCurrency)
+            endPriceInput.setupDropdown(dataSource: currenciesTypes, selectedIndex: indexOfCurrency)
             endPriceInput.actionAfterSet = { [unowned self] in
-                startPriceInput.setupDropdown(dataSource: currencyTypes, selectedIndex: currencyTypes.firstIndex(of: endPriceInput.selectedDropdownOption) ?? 0)
-                vm.currency =  endPriceInput.selectedDropdownOption == "lei".l10n() ? .ron : .euro
+                startPriceInput.setupDropdown(dataSource: currenciesTypes, selectedIndex: currenciesTypes.firstIndex(of: endPriceInput.selectedDropdownOption) ?? 0)
+                if let currentCurrency = allCurrencies.first(where: { $0.symbol == endPriceInput.selectedDropdownOption }) {
+                        vm.currency = currentCurrency.name
+                }
             }
-            vm.currency = startPriceInput.selectedDropdownOption == "lei".l10n() ? .ron : .euro
+            if let currentCurrency = allCurrencies.first(where: { $0.symbol == startPriceInput.selectedDropdownOption }) {
+                    vm.currency = currentCurrency.name
+            }
             
             typeRadioButton.setup(sectionLabel: "addOffer_offer_type".l10n(),
                                   optionOne: "addOffer_fixPrice".l10n(),
@@ -528,22 +549,28 @@ private extension FilterVC {
                                             type: .intNamed(""),
                                             inputText: "",
                                             placeholder: "addOffer_price_placeholder".l10n(), canBeEmpty: true)
-            startPriceInput.setupDropdown(dataSource: currencyTypes)
+            startPriceInput.setupDropdown(dataSource: currenciesTypes)
             startPriceInput.actionAfterSet = { [unowned self] in
-                endPriceInput.setupDropdown(dataSource: currencyTypes, selectedIndex: currencyTypes.firstIndex(of: startPriceInput.selectedDropdownOption) ?? 0)
-                vm.currency =  startPriceInput.selectedDropdownOption == "lei".l10n() ? .ron : .euro
+                endPriceInput.setupDropdown(dataSource: currenciesTypes, selectedIndex: currenciesTypes.firstIndex(of: startPriceInput.selectedDropdownOption) ?? 0)
+                if let currentCurrency = allCurrencies.first(where: { $0.symbol == startPriceInput.selectedDropdownOption }) {
+                        vm.currency = currentCurrency.name
+                    }
             }
             
             endPriceInput.setupInputField(title: "End price",
                                           type: .intNamed(""),
                                           inputText: "",
                                           placeholder: "addOffer_price_placeholder".l10n(), canBeEmpty: true)
-            endPriceInput.setupDropdown(dataSource: currencyTypes)
+            endPriceInput.setupDropdown(dataSource: currenciesTypes)
             endPriceInput.actionAfterSet = { [unowned self] in
-                startPriceInput.setupDropdown(dataSource: currencyTypes, selectedIndex: currencyTypes.firstIndex(of: endPriceInput.selectedDropdownOption) ?? 0)
-                vm.currency =  endPriceInput.selectedDropdownOption == "lei".l10n() ? .ron : .euro
+                startPriceInput.setupDropdown(dataSource: currenciesTypes, selectedIndex: currenciesTypes.firstIndex(of: endPriceInput.selectedDropdownOption) ?? 0)
+                    if let currentCurrency = allCurrencies.first(where: { $0.symbol == endPriceInput.selectedDropdownOption }) {
+                        vm.currency = currentCurrency.name
+                    }
             }
-            vm.currency = startPriceInput.selectedDropdownOption == "lei".l10n() ? .ron : .euro
+            if let currentCurrency = allCurrencies.first(where: { $0.symbol == startPriceInput.selectedDropdownOption }) {
+                vm.currency = currentCurrency.name
+            }
             typeRadioButton.setup(sectionLabel: "addOffer_offer_type".l10n(),
                                   optionOne: "addOffer_fixPrice".l10n(),
                                   optionTwo: "addOffer_auction".l10n(),
@@ -595,7 +622,7 @@ private extension FilterVC {
             if let cat = vm.category {
                 categories.append(cat.id)
             }
-            let search = SearchWithFilter(condition: vm.condition?.type, priceFilter: PriceFilter(highestPrice: vm.endPrice, lowestPrice: vm.startPrice, currencyType: vm.currency.type), location: vm.location, categories: categories, offerType: vm.offerType?.type, title: vm.text)
+            let search = SearchWithFilter(condition: vm.condition?.type, priceFilter: PriceFilter(highestPrice: vm.endPrice, lowestPrice: vm.startPrice, currencyType: vm.currency), location: vm.location, categories: categories, offerType: vm.offerType?.type, title: vm.text)
             Offline.encode(search, key: .currentSearch)
             vm.searchWithFilter(filter: search)
         }

@@ -5,9 +5,23 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.Auxby</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.156615882044-mk6ccisj7h3k7v0rtogpn8q2i40rbppu</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.Auxby</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>auxbyapp</string>
 			</array>
 		</dict>
 	</array>
@@ -65,5 +79,18 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>branch_key</key>
+	<dict>
+		<key>live</key>
+		<string>key_live_lskVxZtEvNRj6I4IFjysBfnftDaqX2FJ</string>
+		<key>test</key>
+		<string>key_test_nxmLw1xrqOKVzW62LFcDTpdbzqmTbst5</string>
+	</dict>
+	<key>branch_universal_link_domains</key>
+	<array>
+		<string>auxby.app.link</string>
+		<string>auxby-alternate.app.link</string>
+		<string>auxby.test-app.link</string>
+	</array>
 </dict>
 </plist>

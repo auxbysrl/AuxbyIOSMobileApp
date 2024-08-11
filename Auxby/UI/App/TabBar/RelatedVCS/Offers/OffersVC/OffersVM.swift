@@ -24,6 +24,8 @@ final class OffersVM {
     @Published private(set) var getPromotedOffersState = RequestState<[Offer]>.idle
     @Published private(set) var getAddToFavoriteState = RequestState<SuccessResponse>.idle
     @Published private(set) var getNotificationsState = RequestState<[AppNotification]>.idle
+    @Published private(set) var getCurrenciessState = RequestState<[Currency]>.idle
+    @Published private(set) var getUserState = RequestState<User>.idle
     var cancellables: Set<AnyCancellable> = []
     
     init() {
@@ -39,6 +41,20 @@ final class OffersVM {
         getCategoriesState = .loading
         Network.shared.request(endpoint: .getCategories)
             .assign(to: &$getCategoriesState)
+    }
+    
+    func getUser() {
+        if let _ = Offline.decode(key: .currentUser, type: User.self) {
+            getUserState = .loading
+            Network.shared.request(endpoint: .getUser)
+                .assign(to: &$getUserState)
+        }
+    }
+    
+    func getCurrencies() {
+        getCurrenciessState = .loading
+        Network.shared.request(endpoint: .getCurrencies)
+            .assign(to: &$getCurrenciessState)
     }
     
     func getPromotedOffers() {

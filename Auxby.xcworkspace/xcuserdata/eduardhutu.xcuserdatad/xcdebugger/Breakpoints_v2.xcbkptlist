@@ -46,8 +46,8 @@
             filePath = "Auxby/UI/App/Register/CreatePassword/CreatePasswordVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "145"
-            endingLineNumber = "145"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
             landmarkName = "setInfoImageConfirm()"
             landmarkType = "7">
          </BreakpointContent>
@@ -110,8 +110,8 @@
             filePath = "Auxby/UI/App/DrawerMenu/DrawerMenuVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
             landmarkName = "DrawerMenuVC"
             landmarkType = "3">
             <Locations>
@@ -158,8 +158,8 @@
             filePath = "Auxby/UI/App/DrawerMenu/DrawerMenuVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "129"
-            endingLineNumber = "129"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
             landmarkName = "setView()"
             landmarkType = "7">
          </BreakpointContent>
@@ -222,8 +222,8 @@
             filePath = "Auxby/UI/App/DrawerMenu/DrawerMenuVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
             landmarkName = "goToLogin(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -333,8 +333,8 @@
             filePath = "Auxby/UI/App/TabBar/TabBarVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
             landmarkName = "TabBarVC"
             landmarkType = "3">
             <Locations>
@@ -413,8 +413,8 @@
             filePath = "Auxby/UI/App/TabBar/RelatedVCS/Offers/AddOffersVC/AddOffersVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "284"
-            endingLineNumber = "284"
+            startingLineNumber = "293"
+            endingLineNumber = "293"
             landmarkName = "setObservable()"
             landmarkType = "7">
             <Locations>
@@ -492,8 +492,8 @@
             filePath = "Auxby/UI/App/PreviewOrDetails/PreviewOrDetailsVCUser.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "244"
-            endingLineNumber = "244"
+            startingLineNumber = "238"
+            endingLineNumber = "238"
             landmarkName = "setUser(offer:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -540,9 +540,9 @@
             filePath = "Auxby/UI/App/TabBar/RelatedVCS/Bids/ActiveBids/ActiveBidsVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
-            landmarkName = "collectionView(_:numberOfItemsInSection:)"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
+            landmarkName = "collectionView(_:cellForItemAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -556,8 +556,8 @@
             filePath = "Auxby/UI/App/TabBar/RelatedVCS/Bids/BidsVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
+            startingLineNumber = "164"
+            endingLineNumber = "164"
             landmarkName = "setPageVCs()"
             landmarkType = "7">
          </BreakpointContent>
@@ -572,8 +572,8 @@
             filePath = "Auxby/UI/App/TabBar/RelatedVCS/Offers/AddOffersVC/AddOffersVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "353"
-            endingLineNumber = "353"
+            startingLineNumber = "368"
+            endingLineNumber = "368"
             landmarkName = "createSubCategoryDetails()"
             landmarkType = "7">
          </BreakpointContent>
@@ -636,9 +636,9 @@
             filePath = "Auxby/UI/App/ChangePassword/ChangePasswordVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "92"
-            endingLineNumber = "92"
-            landmarkName = "setNextButton()"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
+            landmarkName = "setInfoImageOld()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -652,8 +652,8 @@
             filePath = "Auxby/UI/App/Profile/ProfileVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "103"
-            endingLineNumber = "103"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
             landmarkName = "updateUserImage(photo:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -684,8 +684,8 @@
             filePath = "Auxby/UI/App/PreviewOrDetails/PreviewOrDetailsVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
+            startingLineNumber = "116"
+            endingLineNumber = "116"
             landmarkName = "addOrRemoveFromFavorite()"
             landmarkType = "7">
          </BreakpointContent>
@@ -700,8 +700,8 @@
             filePath = "Auxby/UI/App/TabBar/RelatedVCS/Offers/AddOffersVC/AddOffersVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "106"
-            endingLineNumber = "106"
+            startingLineNumber = "118"
+            endingLineNumber = "118"
             landmarkName = "addImagesForOffer(images:id:)"
             landmarkType = "7">
             <Locations>
@@ -778,26 +778,10 @@
             filePath = "Auxby/UI/App/TabBar/RelatedVCS/Bids/InnactiveBids/InnactiveBidsVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
-            landmarkName = "setObservable()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "300979D4-7DB3-4F7A-A802-D9493C709003"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Auxby/UI/Components/OfferView/OfferView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
-            landmarkName = "addOrRemoveToFavorite(_:)"
-            landmarkType = "7">
+            startingLineNumber = "61"
+            endingLineNumber = "61"
+            landmarkName = "InnactiveBidsVC"
+            landmarkType = "21">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -851,54 +835,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "6E3F8481-F88E-4594-8B83-FC55B7E0EF10"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Auxby/UI/App/PreviewOrDetails/PreviewOrDetailsVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "402"
-            endingLineNumber = "402"
-            landmarkName = "disableOrEnable(_:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "6E3F8481-F88E-4594-8B83-FC55B7E0EF10 - c62a9abc240f1a7a"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Auxby.PreviewOrDetailsVC.disableOrEnable(__C.UIButton) -&gt; ()"
-                  moduleName = "Auxby"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/eduardhutu/EdiDocuments/Documents/Auxby/AuxbyIOSMobileApp/Auxby/UI/App/PreviewOrDetails/PreviewOrDetailsVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "402"
-                  endingLineNumber = "402"
-                  offsetFromSymbolStart = "6384">
-               </Location>
-               <Location
-                  uuid = "6E3F8481-F88E-4594-8B83-FC55B7E0EF10 - c62a9abc240f1a7a"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Auxby.PreviewOrDetailsVC.disableOrEnable(__C.UIButton) -&gt; ()"
-                  moduleName = "Auxby"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/eduardhutu/EdiDocuments/Documents/Auxby/AuxbyIOSMobileApp/Auxby/UI/App/PreviewOrDetails/PreviewOrDetailsVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "402"
-                  endingLineNumber = "402"
-                  offsetFromSymbolStart = "5888">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "C68F4AD9-48F6-452F-B54E-8F5598E427EB"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -910,6 +846,86 @@
             endingLineNumber = "169"
             landmarkName = "localizedCurrencyPrice"
             landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "63DBC63B-62C3-44E0-B50F-F6F7881F84CD"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Auxby/UI/App/Login/LoginVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "265"
+            endingLineNumber = "265"
+            landmarkName = "authorizationController(controller:didCompleteWithAuthorization:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "63DBC63B-62C3-44E0-B50F-F6F7881F84CD - 4db9fccd0b3721e4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Auxby.LoginVC.authorizationController(controller: __C.ASAuthorizationController, didCompleteWithAuthorization: __C.ASAuthorization) -&gt; ()"
+                  moduleName = "Auxby"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/eduardhutu/EdiDocuments/Documents/Auxby/AuxbyIOSMobileApp/Auxby/UI/App/Login/LoginVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "265"
+                  endingLineNumber = "265"
+                  offsetFromSymbolStart = "1996">
+               </Location>
+               <Location
+                  uuid = "63DBC63B-62C3-44E0-B50F-F6F7881F84CD - 4db9fccd0b3721e4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Auxby.LoginVC.authorizationController(controller: __C.ASAuthorizationController, didCompleteWithAuthorization: __C.ASAuthorization) -&gt; ()"
+                  moduleName = "Auxby"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/eduardhutu/EdiDocuments/Documents/Auxby/AuxbyIOSMobileApp/Auxby/UI/App/Login/LoginVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "265"
+                  endingLineNumber = "265"
+                  offsetFromSymbolStart = "1256">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A8930D9C-D53F-44C4-B77D-CD63C7A252C2"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Auxby/UI/Components/AddView/AddView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "set(content:imageURL:showAdd:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E87C78E9-B288-47FB-8AE8-44E8267F573E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Auxby/UI/App/TabBar/TabBarVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
+            landmarkName = "displayAdd(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

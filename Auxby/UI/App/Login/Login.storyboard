@@ -32,7 +32,7 @@
                                 <rect key="frame" x="0.0" y="47" width="390" height="763"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j4M-Jt-oM3" userLabel="MainView">
-                                        <rect key="frame" x="0.0" y="0.0" width="390" height="787.33333333333337"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="390" height="845.33333333333337"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="n9e-uO-I4j">
                                                 <rect key="frame" x="25" y="127.00000000000001" width="241" height="50.666666666666671"/>
@@ -102,7 +102,7 @@
                                                     <userDefinedRuntimeAttribute type="string" keyPath="title" value="Login"/>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
-                                            <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="w5l-ui-PTQ" userLabel="Or Stack View">
+                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="w5l-ui-PTQ" userLabel="Or Stack View">
                                                 <rect key="frame" x="25" y="520.66666666666663" width="340" height="14.666666666666629"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qs3-cM-1hN">
@@ -130,7 +130,7 @@
                                                     </view>
                                                 </subviews>
                                             </stackView>
-                                            <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="U4g-x4-W6F" userLabel="Agree Stack View">
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="U4g-x4-W6F" userLabel="Agree Stack View">
                                                 <rect key="frame" x="25" y="547.33333333333337" width="271" height="30"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o3M-RI-Kkt">
@@ -171,7 +171,7 @@
                                                     </button>
                                                 </subviews>
                                             </stackView>
-                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AbB-7e-DUx">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AbB-7e-DUx">
                                                 <rect key="frame" x="25" y="585.33333333333337" width="340" height="50"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="LNl-5X-KwX">
@@ -214,8 +214,23 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                             </view>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="RWl-EI-P6e">
-                                                <rect key="frame" x="63.666666666666657" y="655.33333333333337" width="263" height="32"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3jK-EJ-ef4">
+                                                <rect key="frame" x="25" y="643.33333333333337" width="340" height="50"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="lCw-mr-Ks7"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                        <real key="value" value="0.0"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="8"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="RWl-EI-P6e" userLabel="Sign up Stack View">
+                                                <rect key="frame" x="63.666666666666657" y="713.33333333333337" width="263" height="32"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="btR-ud-Wvt">
                                                         <rect key="frame" x="0.0" y="0.0" width="189" height="32"/>
@@ -265,17 +280,20 @@
                                             <constraint firstAttribute="bottom" secondItem="RWl-EI-P6e" secondAttribute="bottom" constant="100" id="Ncj-H5-WML"/>
                                             <constraint firstItem="AbB-7e-DUx" firstAttribute="top" secondItem="U4g-x4-W6F" secondAttribute="bottom" constant="8" id="PPt-IZ-XTn"/>
                                             <constraint firstItem="fQg-hi-3M4" firstAttribute="top" secondItem="j4M-Jt-oM3" secondAttribute="top" constant="15" id="PjG-Er-qUC"/>
+                                            <constraint firstAttribute="trailing" secondItem="3jK-EJ-ef4" secondAttribute="trailing" constant="25" id="Qzt-lp-7h3"/>
                                             <constraint firstAttribute="trailing" secondItem="w5l-ui-PTQ" secondAttribute="trailing" constant="25" id="S2o-xF-tAv"/>
                                             <constraint firstAttribute="trailing" secondItem="JaO-3h-c2T" secondAttribute="trailing" constant="25" id="Ti5-L4-IKz"/>
                                             <constraint firstItem="n9e-uO-I4j" firstAttribute="top" secondItem="fQg-hi-3M4" secondAttribute="bottom" constant="90" id="VGG-se-58j"/>
+                                            <constraint firstItem="RWl-EI-P6e" firstAttribute="top" secondItem="3jK-EJ-ef4" secondAttribute="bottom" constant="20" id="X3y-Km-RLJ"/>
                                             <constraint firstItem="n9e-uO-I4j" firstAttribute="leading" secondItem="j4M-Jt-oM3" secondAttribute="leading" constant="25" id="XaD-dO-vUK"/>
                                             <constraint firstItem="2db-Bh-OIH" firstAttribute="top" secondItem="JaO-3h-c2T" secondAttribute="bottom" constant="5" id="Yxl-Hk-WQx"/>
                                             <constraint firstItem="AbB-7e-DUx" firstAttribute="leading" secondItem="j4M-Jt-oM3" secondAttribute="leading" constant="25" id="Zft-UL-qqz"/>
                                             <constraint firstItem="U4g-x4-W6F" firstAttribute="top" secondItem="w5l-ui-PTQ" secondAttribute="bottom" constant="12" id="bgi-v3-7Pp"/>
                                             <constraint firstAttribute="trailing" secondItem="vHB-gq-vmV" secondAttribute="trailing" constant="25" id="dT5-dr-z9C"/>
+                                            <constraint firstItem="3jK-EJ-ef4" firstAttribute="top" secondItem="AbB-7e-DUx" secondAttribute="bottom" constant="8" id="dsU-ja-STN"/>
                                             <constraint firstAttribute="trailing" secondItem="fQg-hi-3M4" secondAttribute="trailing" constant="25" id="gA6-Ab-gBE"/>
-                                            <constraint firstItem="RWl-EI-P6e" firstAttribute="top" secondItem="AbB-7e-DUx" secondAttribute="bottom" constant="20" id="gE2-aL-Ngv"/>
                                             <constraint firstItem="RWl-EI-P6e" firstAttribute="centerX" secondItem="j4M-Jt-oM3" secondAttribute="centerX" id="gip-7Y-jD5"/>
+                                            <constraint firstItem="3jK-EJ-ef4" firstAttribute="leading" secondItem="j4M-Jt-oM3" secondAttribute="leading" constant="25" id="hVw-a4-wya"/>
                                             <constraint firstItem="w5l-ui-PTQ" firstAttribute="leading" secondItem="j4M-Jt-oM3" secondAttribute="leading" constant="25" id="iOE-9G-iyV"/>
                                             <constraint firstItem="U4g-x4-W6F" firstAttribute="leading" secondItem="j4M-Jt-oM3" secondAttribute="leading" constant="25" id="mWn-ym-1t6"/>
                                             <constraint firstItem="2db-Bh-OIH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="j4M-Jt-oM3" secondAttribute="leading" constant="20" symbolic="YES" id="pNq-T2-Vsc"/>
@@ -306,6 +324,7 @@
                     </view>
                     <connections>
                         <outlet property="agreeSV" destination="U4g-x4-W6F" id="oue-vJ-xhz"/>
+                        <outlet property="appleSignInView" destination="3jK-EJ-ef4" id="co8-Yg-6vK"/>
                         <outlet property="checkButton" destination="o3M-RI-Kkt" id="4fQ-WA-BTQ"/>
                         <outlet property="emailInput" destination="gXh-Ym-IFQ" id="4OZ-cO-W2T"/>
                         <outlet property="googleLoginView" destination="AbB-7e-DUx" id="Ec6-1I-fc9"/>

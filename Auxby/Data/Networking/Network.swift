@@ -180,7 +180,7 @@ extension Network {
         case 402, 405...499: return .error4xx(statusCode, errorDescription)
         case 500: return .serverError(statusCode, errorDescription)
         case 501...599: return .error5xx(statusCode, errorDescription)
-        default: return .unknownError(errorDescription)
+        default: return .unknownError(statusCode, errorDescription)
         }
     }
 
@@ -206,7 +206,7 @@ extension Network {
                 error = .urlSessionFailed(urlError, urlError.localizedDescription)
             }
         default:
-            error = .unknownError("\(err)")
+            error = .unknownError(0,"\(err)")
         }
         // print the error on the terminal for easy troubleshooting
         print("\n\(desc)\n\(error.localizedDescription)".consoleError)
@@ -225,7 +225,7 @@ enum NetworkError: LocalizedError, Equatable {
     case error5xx(_ code: Int, _ errorDescription: String?)
     case decodingError(_ errorDescription: String?)
     case urlSessionFailed(_ error: URLError, _ errorDescription: String?)
-    case unknownError(_ errorDescription: String?)
+    case unknownError(_ code: Int,_ errorDescription: String?)
     case customError(_ code: Int,_ errorDescription: String?)
     case noInternetConnection(_ errorDescription: String?)
     case timeOut(_ errorDescription: String?)
@@ -235,7 +235,7 @@ enum NetworkError: LocalizedError, Equatable {
                 .forbidden(_, let err), .notFound(_, let err), .error4xx(_, let err),
                 .invalidRequest(let err), .badRequest(_, let err), .unauthorized(_, let err),
                 .serverError(_, let err), .error5xx(_, let err), .decodingError(let err),
-                .urlSessionFailed(_, let err), .unknownError(let err),
+                .urlSessionFailed(_, let err), .unknownError(_, let err),
                 .customError(_, let err), .noInternetConnection(let err),
                 .timeOut(let err):
             return err

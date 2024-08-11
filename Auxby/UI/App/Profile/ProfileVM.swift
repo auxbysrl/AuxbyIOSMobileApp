@@ -77,7 +77,7 @@ class ProfileVM {
         var body = Data()
         
         // Append the image data to the body
-        if let imageData = compressImage(photo, maxFileSize: 6 * 1024 * 1024) {
+        if let imageData = ImageCompresser().compressImage(photo) {
             body.append("--\(boundary)\r\n".data(using: .utf8)!)
             body.append("Content-Disposition: form-data; name=\"file\"; filename=\"image.jpg\"\r\n".data(using: .utf8)!)
             body.append("Content-Type: image/jpeg\r\n\r\n".data(using: .utf8)!)
@@ -96,10 +96,20 @@ class ProfileVM {
         let task = session.dataTask(with: request) { [unowned self] data, response, error in
             if let error = error {
                 print("Error sending request: \(error.localizedDescription)")
+                UIAlert.showOneButton(message: "errorImages".l10n()) {
+                    runOnMainThread {
+                        self.finishAddingImage?()
+                    }
+                }
                 return
             }
             guard let httpResponse = response as? HTTPURLResponse else {
                 print("Invalid response")
+                UIAlert.showOneButton(message: "errorImages".l10n()) {
+                    runOnMainThread {
+                        self.finishAddingImage?()
+                    }
+                }
                 return
             }
             if httpResponse.statusCode == 200 {
@@ -111,23 +121,13 @@ class ProfileVM {
                 }
             } else {
                 UIAlert.showOneButton(message: "errorImages".l10n()) {
-                    self.finishAddingImage?()
+                    runOnMainThread {
+                        self.finishAddingImage?()
+                    }
                 }
             }
             
         }
         task.resume()
-    }
-    
-    func compressImage(_ image: UIImage, maxFileSize: Int) -> Data? {
-        var compression: CGFloat = 0.9
-        var imageData = image.jpegData(compressionQuality: compression)
-        
-        while let data = imageData, data.count > maxFileSize && compression > 0.1 {
-            compression -= 0.1
-            imageData = image.jpegData(compressionQuality: compression)
-        }
-        
-        return imageData
     }
 }

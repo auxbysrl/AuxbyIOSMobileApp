@@ -52,6 +52,9 @@ class OfferView: UIView {
     }
     
     func setView(offer: Offer, addToFav: (() -> Void)?, viewOffers: (() -> Void)?, showUsers: (() -> Void)?) {
+        extraView.isHidden = true
+        promoteView.isHidden = true
+        offerImage.image = UIImage(named: "noPhotoImage")  
         self.offer = offer
         isFavorite = offer.isUserFavorite!
         promoteView.isHidden = !offer.isPromoted
@@ -86,18 +89,13 @@ class OfferView: UIView {
         } else {
             offerImage.setImage(from: offer.photos![0].url!, reload: false)
         }
-        var currency = ""
-        switch offer.currencyType {
-        case "EURO" : currency = "€"
-        default: currency = "lei"
-        }
         var price = 0
         if offer.isOnAuction {
             price = offer.highestBid == 0 ? Int(offer.price) : Int(offer.highestBid!)
         } else {
             price = Int(offer.price)
         }
-        lastBidLabel.text = "\(price.formattedString)" + (currency)
+        lastBidLabel.text = "\(price.formattedString)" + (offer.currencySymbol ?? "")
         setPriceTextColor()
     }
     

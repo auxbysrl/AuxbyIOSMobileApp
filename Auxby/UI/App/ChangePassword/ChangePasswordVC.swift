@@ -62,8 +62,12 @@ private extension ChangePasswordVC {
                 popVC()
             case .failed(let err):
                 print(err.localizedDescription)
-                UIAlert.showOneButton(message: "somethingWentWrong".l10n())
-            default:
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                }            default:
                 break
             }
         }.store(in: &vm.cancellables)

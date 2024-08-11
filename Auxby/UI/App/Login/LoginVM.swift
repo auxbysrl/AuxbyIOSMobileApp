@@ -21,6 +21,7 @@ class LoginVM: ObservableObject {
     @Published private(set) var getUserState = RequestState<User>.idle
     @Published private(set) var getSaveApnsState = RequestState<Void>.idle
     @Published private(set) var loginGoogleState = RequestState<LoginResponse>.idle
+    @Published private(set) var loginAppleState = RequestState<LoginResponse>.idle
     var cancellables: Set<AnyCancellable> = []
     
     func login() {
@@ -39,6 +40,12 @@ class LoginVM: ObservableObject {
         loginGoogleState = .loading
         Network.shared.request(endpoint: .loginGoogle(token: token))
             .assign(to: &$loginGoogleState)
+    }
+    
+    func loginApple(token: String, firstName: String, lastName: String) {
+        loginAppleState = .loading
+        Network.shared.request(endpoint: .loginApple(authCode: token, firstName: firstName, lastName: lastName))
+            .assign(to: &$loginAppleState)
     }
     
     func getUser() {

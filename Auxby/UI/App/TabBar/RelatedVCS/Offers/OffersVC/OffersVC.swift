@@ -34,6 +34,7 @@ class OffersVC: UIViewController {
         setView()
         if let _ = Offline.decode(key: .currentUser, type: User.self) {
             vm.getAllNotifications()
+            
         }
        
     }
@@ -41,6 +42,8 @@ class OffersVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         vm.getCategories()
+        vm.getCurrencies()
+        vm.getUser()
         vm.currentPage = 0
         vm.offers = []
         offersCV.reloadData()
@@ -105,6 +108,7 @@ private extension OffersVC {
         vm.isRefreshing = true
         vm.getPromotedOffers()
         vm.getCategories()
+        vm.getUser()
     }
     
     func setObservable() {
@@ -117,6 +121,34 @@ private extension OffersVC {
         NotifyCenter.observable(for: .newMessage).sink { [unowned self]  in
             if let _ = Offline.decode(key: .currentUser, type: User.self) {
                 vm.getAllNotifications()
+            }
+        }.store(in: &vm.cancellables)
+        
+        vm.$getUserState.sink { [unowned self] state in
+            switch state {
+            case .succeed(let user):
+                Offline.encode(user, key: .currentUser)
+            case .failed(let err):
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                }
+                print(err.localizedDescription)
+            default: break
+            }
+        }.store(in: &vm.cancellables)
+        
+        vm.$getCurrenciessState.sink { state in
+            switch state {
+            case .succeed(let currencies):
+                Offline.encode(currencies, key: .currencies)
+            case .failed(let err):
+                print(err.localizedDescription)
+                let currencies = [Currency(name: "RON", symbol: "lei"), Currency(name: "EURO", symbol: "€"), Currency(name: "USD", symbol: "$")]
+                Offline.encode(currencies, key: .currencies)
+            default: break
             }
         }.store(in: &vm.cancellables)
         
@@ -152,7 +184,13 @@ private extension OffersVC {
                 vm.currentPromotedOffers = offers
                 vm.getOffers()
             case .failed(let err):
-                UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                }
+                
                 vm.isLoading = false
                 refreshControl?.endRefreshing()
                 loaderView.isHidden = true
@@ -215,7 +253,12 @@ private extension OffersVC {
                 Offline.encode(vm.offers, key: .offers)
                 offersCV.reloadData()
             case .failed(let err):
-                UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                }
                 vm.isLoading = false
                 refreshControl?.endRefreshing()
                 loaderView.isHidden = true
@@ -233,7 +276,12 @@ private extension OffersVC {
                 offerDetailsVC.vm = PreviewOrDetailsVM(offer: response.content[0])
                 topVC().pushVC(offerDetailsVC)
             case .failed(let err):
-                UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                }
                 print(err.localizedDescription)
             default: break
             }

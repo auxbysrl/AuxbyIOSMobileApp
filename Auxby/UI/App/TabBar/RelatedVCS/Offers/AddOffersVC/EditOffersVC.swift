@@ -56,13 +56,22 @@ extension AddOffersVC {
                                    type: .intNamed(""),
                                    inputText: "\(Int(offer.price))",
                                    placeholder: "addOffer_price_placeholder".l10n())
-        priceInput.setupDropdown(dataSource: ["lei".l10n(),
-                                              "euro".l10n()], selectedIndex: offer.currencyType == CurrencyType.ron.type.uppercased() ? 0 : 1)
+         var symbols: [String] = []
+         if let currencies = Offline.decode(key: .currencies, type: [Currency].self) {
+             for currency in currencies {
+                 symbols.append(currency.symbol)
+             }
+         }
+        priceInput.setupDropdown(dataSource: symbols, selectedIndex: symbols.firstIndex(of: offer.currencySymbol ?? "") ?? 0)
         priceInput.actionAfterSet = { [unowned self] in
-            vm.currency = priceInput.selectedDropdownOption == "lei".l10n() ? .ron : .euro
+            if let currencies = Offline.decode(key: .currencies, type: [Currency].self) {
+                if let currentCurrency = currencies.first(where: { $0.symbol == priceInput.selectedDropdownOption }) {
+                    vm.currency = currentCurrency.name
+                }
+            }
         }
         vm.price = "\(offer.price)"
-        vm.currency = offer.currencyType == CurrencyType.ron.type ? CurrencyType.ron : CurrencyType.euro
+        vm.currency = offer.currencyType ?? ""
         
         conditionInput.setup(sectionLabel: "addOffer_condition".l10n(),
                              optionOne: "addOffer_new".l10n(),
@@ -113,7 +122,7 @@ extension AddOffersVC {
             let date = dateFormatter.date(from: vm.stopDate)
             newOffer.auctionEndDate = vm.isBidType ? date!.toString(format: "yyyy-MM-dd") : ""
             newOffer.offerType = vm.offerType.type
-            newOffer.currencyType = vm.currency.type
+            newOffer.currencyType = vm.currency
             newOffer.conditionType = vm.condition.type
             newOffer.contactInfo = NewOffer.ContactInfo(location: vm.location, phoneNumber: vm.phone)
             newOffer.categoryDetails = vm.details

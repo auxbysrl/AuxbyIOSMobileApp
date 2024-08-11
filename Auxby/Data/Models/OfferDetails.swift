@@ -19,6 +19,7 @@ class OfferDetails: Codable {
     var isOnAuction: Bool
     var price: Double
     var currencyType: String?
+    var currencySymbol: String?
     var owner: Owner?
     var highestBid: Double?
     var bids: [Bid]?
@@ -32,6 +33,7 @@ class OfferDetails: Codable {
     var condition: String?
     var autoExtend: Bool
     var isPromoted: Bool
+    var deepLink: String?
     
     init(id: Int, title: String, location: String, description: String, categoryId: Int, auctionStartDate: String? = nil, auctionEndDate: String? = nil, publishDate: String? = nil, expirationDate: String? = nil, isOnAuction: Bool, price: Double, currencyType: String? = nil, owner: Owner? = nil, highestBid: Double? = nil, bids: [Bid]? = nil, photos: [Photo]? = nil, details: [Details]? = nil, viewsNumber: Int, setAsFavoriteNumber: Int, status: String, isPromoted: Bool) {
         self.id = id
@@ -74,4 +76,8 @@ class Details: Codable {
     func toValue()-> NewOffer.Values {
         return NewOffer.Values(key: self.key, value: self.value)
     }
+}
+
+class OfferDeepLink: Codable {
+    var url: String
 }

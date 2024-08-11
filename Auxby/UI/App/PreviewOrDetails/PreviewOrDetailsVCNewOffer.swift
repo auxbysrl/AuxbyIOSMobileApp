@@ -21,7 +21,7 @@ extension PreviewOrDetailsVC {
     func setFavoritesNumberNewOffer() {
         favoriteSV.isHidden = true
         reportButton.isHidden = true
-        //shareButton.isHidden = true
+        shareButton.isHidden = true
     }
     
     func setImagesNewOffer() {
@@ -53,9 +53,10 @@ extension PreviewOrDetailsVC {
         }
         bidView.isHidden = true
         var currency = ""
-        switch newOffer.currencyType {
-        case CurrencyType.euro.type : currency = "€"
-        default: currency = "lei"
+        if let currencies = Offline.decode(key: .currencies, type: [Currency].self) {
+            if let currentCurrency = currencies.first(where: { $0.name == newOffer.currencyType }) {
+                currency = currentCurrency.symbol
+            }
         }
         priceLabel.text = Int(newOffer.price).formattedString + (currency)
     }

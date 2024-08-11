@@ -19,6 +19,7 @@ enum NotificationType: String {
     case filterOffers
     case newMessage
     case updateNotifications
+    case updateUser
 }
 
 /**

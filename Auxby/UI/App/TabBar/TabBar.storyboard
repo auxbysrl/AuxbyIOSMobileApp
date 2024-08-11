@@ -276,6 +276,10 @@
                                     <constraint firstAttribute="trailing" secondItem="yi3-oc-yf1" secondAttribute="trailing" id="wvE-om-T0z"/>
                                 </constraints>
                             </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PmI-To-T5z" customClass="AddView" customModule="Auxby" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" name="white"/>
@@ -284,10 +288,15 @@
                             <constraint firstItem="AdF-SQ-guj" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="3rR-J6-OYf"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="AdF-SQ-guj" secondAttribute="trailing" id="8q5-ZV-gym"/>
                             <constraint firstItem="AdF-SQ-guj" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="AAW-tq-mZn"/>
+                            <constraint firstAttribute="bottom" secondItem="PmI-To-T5z" secondAttribute="bottom" id="FXz-m5-atM"/>
+                            <constraint firstItem="PmI-To-T5z" firstAttribute="leading" secondItem="5EZ-qb-Rvc" secondAttribute="leading" id="L8L-d0-H9S"/>
+                            <constraint firstAttribute="trailing" secondItem="PmI-To-T5z" secondAttribute="trailing" id="Onz-YK-15z"/>
                             <constraint firstAttribute="bottom" secondItem="AdF-SQ-guj" secondAttribute="bottom" id="bvq-af-lJF"/>
+                            <constraint firstItem="PmI-To-T5z" firstAttribute="top" secondItem="5EZ-qb-Rvc" secondAttribute="top" id="qNI-Xy-GVY"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="addView" destination="PmI-To-T5z" id="MXB-Ig-hGC"/>
                         <outlet property="containerView" destination="579-Al-4xd" id="ej5-Td-ts8"/>
                         <outletCollection property="tabBarButtons" destination="oQF-gS-F2P" collectionClass="NSMutableArray" id="FhB-iq-xNv"/>
                         <outletCollection property="tabBarButtons" destination="gvk-c2-Kf7" collectionClass="NSMutableArray" id="4rz-Mo-6om"/>

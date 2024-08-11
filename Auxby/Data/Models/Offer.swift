@@ -23,6 +23,7 @@ class Offer: Codable {
     var publishDate: String?
     var expirationDate: String?
     var currencyType: String?
+    var currencySymbol: String?
     var bids: [Bid]?
     var highestBid: Double?
     var photos: [Photo]?

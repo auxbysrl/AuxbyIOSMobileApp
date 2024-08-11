@@ -99,9 +99,14 @@ private extension CreatePasswordVC {
                     verifyEmailVC.vm = VerifyEmailVM(email: self.vm.user.email, password: self.vm.password!)
                     self.pushVC(verifyEmailVC)
                 }
-            case .failed:
+            case .failed(let err):
                 mainButton.stopAnimation(animationStyle: .shake) {
-                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                    if err.errorStatus == 403 {
+                        UIAlert.showOneButton(message: "expireToken".l10n())
+                        
+                    } else {
+                        UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                    }
                 }
             default: break
             }

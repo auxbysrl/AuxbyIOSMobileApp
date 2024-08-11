@@ -278,3 +278,8 @@
 "newestOffers" = "Anunțuri noi";
 "succesfullyPromote" = "Anunțul a fost promovat cu succes!";
 "bidHistory" = "Istoricul licitațiilor";
+"cantBeLower" = "Bidul nu poate fi mai mic decât";
+"expireToken" = "Sesiunea a expirat. Vă rugăm să vă autentificați din nou.";
+"bidWarningMessage" = "Auxby nu poate fi considerată responsabilă pentru neîndeplinirea obligațiilor de către vânzători în cadrul licitațiilor.";
+"userDetails" = "Detalii utilizator";
+"failedEmail" = "Autentificarea a eșuat. Este posibil sa existe deja un cont cu acest email!";

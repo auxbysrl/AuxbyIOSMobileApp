@@ -37,12 +37,6 @@ class CarrusellView: UIView {
         } else {
             offerImage.setImage(from: offer.photos![0].url!)
         }
-        var currency = ""
-        switch offer.currencyType {
-        case "EURO" : currency = "€"
-        case "DOLAR": currency = "$"
-        default: currency = "RON"
-        }
         var price = 0
         if offer.isOnAuction {
             priceType.text = "currentBid".l10n()
@@ -51,7 +45,7 @@ class CarrusellView: UIView {
             priceType.text = "price".l10n()
             price = Int(offer.price)
         }
-        priceLabel.text = "\(price.formattedString) " + (currency)
+        priceLabel.text = "\(price.formattedString) " + (offer.currencySymbol ?? "")
     }
 
 }

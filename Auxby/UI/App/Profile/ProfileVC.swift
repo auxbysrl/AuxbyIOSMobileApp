@@ -195,17 +195,24 @@ private extension ProfileVC {
     func setObservable() {
         
         vm.$getLogoutState.sink { [unowned self] state in
+            state.setStateActivityIndicator(&indicator)
             switch state {
             case .succeed:
                 Offline.delete(key: .currentUser)
                 Offline.delete(key: .favorites)
                 Offline.delete(key: .offers)
                 Offline.delete(key: .userOffers)
+                Offline.delete(key: .currentAdd)
                 Keychain.deleteAll()
                 NotifyCenter.post(.noUser)
                 popVC()
             case .failed(let err):
-                UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                }
                 print(err.localizedDescription)
             default: break
             }
@@ -218,7 +225,12 @@ private extension ProfileVC {
                 resetUserData()
                 Offline.encode(user, key: .currentUser)
             case .failed(let err):
-                UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                }  
                 print(err.localizedDescription)
             default: break
             }
@@ -263,6 +275,7 @@ private extension ProfileVC {
         }.store(in: &vm.cancellables)
         
         vm.$getDeleteUser.sink { [unowned self] state in
+            state.setStateActivityIndicator(&indicator)
             switch state {
             case .succeed:
                 Offline.delete(key: .currentUser)
@@ -273,7 +286,12 @@ private extension ProfileVC {
                 NotifyCenter.post(.noUser)
                 self.popVC()
             case .failed(let err):
-                UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                }
                 print(err.localizedDescription)
             default:
                 break

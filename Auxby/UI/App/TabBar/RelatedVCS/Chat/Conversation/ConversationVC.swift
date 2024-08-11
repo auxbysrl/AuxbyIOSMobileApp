@@ -125,8 +125,14 @@ private extension ConversationVC {
                 vm.isFirst = false
                 NotifyCenter.post(.updateNotifications)
             case .failed(let err):
-                UIAlert.showOneButton(message: "somethingWentWrong".l10n()) {
-                    self.popVC()
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n()) {
+                        self.popVC()
+                    }
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n()) {
+                        self.popVC()
+                    }
                 }
                 print(err.localizedDescription)
             default:

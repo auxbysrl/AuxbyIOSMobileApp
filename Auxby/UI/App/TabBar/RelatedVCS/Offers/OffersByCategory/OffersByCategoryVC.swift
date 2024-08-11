@@ -66,8 +66,15 @@ private extension OffersByCategoryVC {
                 vm.totalPages = offersResponse.totalPages
                 cv.reloadData()
             case .failed(let err):
-                UIAlert.showOneButton(message: "somethingWentWrong".l10n()) {
-                    self.popVC()
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n()) {
+                        self.popVC()
+                    }
+                    
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n()) {
+                        self.popVC()
+                    }
                 }
                 vm.isLoading = false
                 loaderView.isHidden = true
@@ -78,7 +85,7 @@ private extension OffersByCategoryVC {
         
         NotifyCenter.observable(for: .updateOffers).sink { [unowned self] _ in
             if let offers = Offline.decode(key: .offers, type: [Offer].self) {
-                vm.filteredOffers = offers
+                vm.filteredOffers = offers.filter { $0.categoryId == vm.selectedCategory.id }
                 cv.reloadData()
             }
         }.store(in: &vm.cancellables)

@@ -13,4 +13,5 @@ pod 'DropDown'
 pod 'L10n-swift', '~> 5.10'
 pod 'SDWebImage'
 pod 'ReachabilitySwift'
+pod 'BranchSDK'
 end

@@ -26,7 +26,7 @@ class FilterVM {
     var location: String?
     var offerType: OfferType?
     var condition: ConditionType?
-    var currency: CurrencyType = .ron
+    var currency = ""
     
     func searchWithFilter(filter: SearchWithFilter) {
         getSearchState = .loading

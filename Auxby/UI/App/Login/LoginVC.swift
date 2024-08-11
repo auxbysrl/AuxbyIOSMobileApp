@@ -9,6 +9,7 @@ import UIKit
 import GoogleSignIn
 import Combine
 import L10n_swift
+import AuthenticationServices
 
 class LoginVC: UIViewController {
     
@@ -19,9 +20,13 @@ class LoginVC: UIViewController {
     @IBOutlet private weak var googleLoginView: UIView!
     @IBOutlet private weak var checkButton: UIButton!
     @IBOutlet weak var agreeSV: UIStackView!
+    @IBOutlet weak var appleSignInView: UIView!
     
     // MARK: - Public properties
     var vm = LoginVM()
+    
+    // MARK: - Private properties
+    private let signinButton = ASAuthorizationAppleIDButton(authorizationButtonType: .signIn, authorizationButtonStyle: .black)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,13 +34,20 @@ class LoginVC: UIViewController {
         setObservable()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        signinButton.frame = CGRect(x: 0, y: 0, width: appleSignInView.frame.width, height: appleSignInView.frame.height)
+        signinButton.addTarget(self, action: #selector(didTapSignIn), for: .touchUpInside)
+        appleSignInView.addSubview(signinButton)
+    }
+    
     // MARK: - IBActions
     @IBAction func goToTerms(_ sender: UIButton) {
         if let url = URL(string: "https://www.auxby.ro/termeni-si-conditii") {
-                  if UIApplication.shared.canOpenURL(url) {
-                      UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                  }
-              }
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+        }
     }
     
     @IBAction func goToForgot(_ sender: UIButton) {
@@ -69,6 +81,7 @@ class LoginVC: UIViewController {
 private extension LoginVC {
     func setView() {
         self.hideKeyboardWhenTappedAround()
+      
         emailInput.set(type: .email, placeholder: "email".l10n(), returnKey: .next, keyboardNextAction: passwordInput.focus)
         passwordInput.set(type: .password(.password), placeholder: "password".l10n(), returnKey: .done)
         mainButton.set(title: "login".l10n()) {
@@ -95,6 +108,23 @@ private extension LoginVC {
             agreeSV.shake()
         }
     }
+    
+    @objc func didTapSignIn() {
+        if vm.hasAgreed {
+            let provider = ASAuthorizationAppleIDProvider()
+            let request = provider.createRequest()
+            request.requestedScopes = [.fullName, .email]
+            let controller = ASAuthorizationController(authorizationRequests: [request])
+            controller.delegate = self
+            controller.presentationContextProvider = self
+            controller.performRequests()
+            
+        } else {
+            checkButton.tintColor = .red
+            agreeSV.shake()
+        }
+    }
+    
     func setObservable() {
         let fields: [InputValidationProtocol] = [emailInput, passwordInput]
         Publishers.CombineLatest(emailInput.textPublisher, passwordInput.textPublisher)
@@ -126,7 +156,12 @@ private extension LoginVC {
                 } else if err.errorStatus == 400 {
                     UIAlert.showOneButton(message: "incorectUsername".l10n())
                 } else {
-                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                    if err.errorStatus == 403 {
+                        UIAlert.showOneButton(message: "expireToken".l10n())
+                        
+                    } else {
+                        UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                    }
                 }
                 
             default : break
@@ -142,8 +177,41 @@ private extension LoginVC {
                     Keychain.save(value: token, item: .token)
                 }
                 vm.getUser()
+                vm.saveApns()
             case .failed (let err):
-                UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else  if err.errorStatus == 400 {
+                    UIAlert.showOneButton(message: "failedEmail".l10n())
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                }
+                mainButton.stopAnimation(animationStyle: .shake)
+                print(err.localizedDescription)
+            default : break
+            }
+        }.store(in: &vm.cancellables)
+        
+        vm.$loginAppleState.sink { [unowned self] state in
+            switch state {
+            case .loading:
+                mainButton.startAnimation()
+            case .succeed(let loginResponse):
+                if let token = loginResponse.token {
+                    Keychain.save(value: token, item: .token)
+                }
+                vm.getUser()
+                vm.saveApns()
+            case .failed (let err):
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else  if err.errorStatus == 400 {
+                    UIAlert.showOneButton(message: "failedEmail".l10n())
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                }
                 mainButton.stopAnimation(animationStyle: .shake)
                 print(err.localizedDescription)
             default : break
@@ -166,7 +234,12 @@ private extension LoginVC {
                     }
                 }
             case .failed(let err):
-                UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                }
                 mainButton.stopAnimation(animationStyle: .shake)
                 print(err.localizedDescription)
             default: break
@@ -174,3 +247,40 @@ private extension LoginVC {
         }.store(in: &vm.cancellables)
     }
 }
+
+extension LoginVC: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+        print(error.localizedDescription)
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        var token = ""
+        var firstName = ""
+        var lastName = ""
+        switch authorization.credential {
+        case let credentials as ASAuthorizationAppleIDCredential:
+            
+            if let tokenData = credentials.authorizationCode, let tokenString = String(data: tokenData, encoding: .utf8) {
+                token = tokenString
+            } else {
+                UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+            }
+            if let fullName = credentials.fullName {
+                firstName = fullName.givenName ?? ""
+                lastName = fullName.familyName ?? ""
+                vm.loginApple(token: token, firstName: firstName, lastName: lastName)
+            } else {
+                UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+            }
+        default: break
+        }
+    }
+    
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return view.window!
+    }
+    
+    
+}
+

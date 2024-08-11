@@ -13,6 +13,7 @@ import Reachability
 import FirebaseCore
 import FirebaseMessaging
 import UserNotifications
+import BranchSDK
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate{
@@ -29,6 +30,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
             L10n.shared.language = "ro"
             Offline.encode(L10n.shared.language, key: .language)
         }
+        whenAppUninstalled()
+        
+        BranchScene.shared().initSession(launchOptions: launchOptions, registerDeepLinkHandler: { (params, error, scene) in
+            if let offerId = params!["$offerId"] as? Int {
+                let offerDetailsVC = PreviewOrDetailsVC.asVC() as! PreviewOrDetailsVC
+                offerDetailsVC.vm = PreviewOrDetailsVM(id: offerId )
+                topVC().pushVC(offerDetailsVC)
+            }
+        })
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(notification:)), name: .reachabilityChanged, object: reachability)
         do {
             reachability = try Reachability()
@@ -59,6 +69,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
     
+  
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        var bgTask: UIBackgroundTaskIdentifier = UIBackgroundTaskIdentifier(rawValue: 0)
+        bgTask = application.beginBackgroundTask(withName: "My Background Task") {
+            application.endBackgroundTask(bgTask)
+            bgTask = UIBackgroundTaskIdentifier.invalid
+        }
+    }
+    
+    private func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+        Branch.getInstance().continue(userActivity)
+        return true
+    }
+    
     func whenAppUninstalled() {
         if UserDefaults.standard.bool(forKey: "hasRunBefore") == false {
             UserDefaults.standard.set(true, forKey: "hasRunBefore")
@@ -77,29 +102,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
             }
         }
     }
-    
+}
+
+extension AppDelegate {
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        
+        print("aici de ce nu intrii?????")
         var handled: Bool
         handled = GIDSignIn.sharedInstance.handle(url)
-        if handled {
-            return true
+        if !handled {
+            return false
         }
-        if let language = Offline.decode(key: .language, type: String.self) {
-            L10n.shared.language = language
-        } else {
-            L10n.shared.language = "ro"
-            Offline.encode(L10n.shared.language, key: .language)
-        }
-        whenAppUninstalled()
-        return false
-    }
-    
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        var bgTask: UIBackgroundTaskIdentifier = UIBackgroundTaskIdentifier(rawValue: 0)
-        bgTask = application.beginBackgroundTask(withName: "My Background Task") {
-            application.endBackgroundTask(bgTask)
-            bgTask = UIBackgroundTaskIdentifier.invalid
-        }
+        return true
     }
 }

@@ -33,7 +33,7 @@ class PlaceBidVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        vm.user = Offline.decode(key: .currentUser, type: User.self)!
+        vm.user = Offline.currentUser!
         setView()
     }
     
@@ -64,7 +64,9 @@ class PlaceBidVC: UIViewController {
             }
             alert.isHidden = false
         } else {
-            vm.placeBid(amount: lastValue)
+            if isEnable {
+                vm.placeBid(amount: lastValue)
+            }
         }
     }
     
@@ -81,6 +83,14 @@ class PlaceBidVC: UIViewController {
         }
         bidTextField.text = formattedString(number: lastValue)
     }
+    
+    @IBAction func goToTerms(_ sender: UIButton) {
+        if let url = URL(string: "https://www.auxby.ro/termeni-si-conditii") {
+                  if UIApplication.shared.canOpenURL(url) {
+                      UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                  }
+              }
+    }
 }
 private extension PlaceBidVC {
     func setView() {
@@ -91,8 +101,8 @@ private extension PlaceBidVC {
         bidCostLabel.text = "bidCost".l10n() + " \(vm.bidPrice)"
         coinsBalanceLabel.text = "coinsBalance".l10n() + " \(vm.user.availableCoins)"
         bidTextField.text = formattedString(number: vm.yourBid)
-        currencyLabel.text = vm.offer.currencyType?.getCurrency
-        highestBidLabel.text = "highestBid".l10n() + " \(formattedString(number: vm.highestBid))\(vm.offer.currencyType!.getCurrency)"
+        currencyLabel.text = vm.offer.currencySymbol
+        highestBidLabel.text = "highestBid".l10n() + " \(formattedString(number: vm.highestBid))\(vm.offer.currencySymbol ?? "")"
         lastValue = vm.yourBid
     }
     
@@ -154,14 +164,14 @@ extension PlaceBidVC: UITextFieldDelegate {
                 if Int(truncating: number) < vm.maxValue {
                     lastValue = Int(truncating: number)
                     textField.text = formatter.string(from: number)
-                    if lastValue < vm.highestBid {
-                        convertedValueLabel.text = "Can't be lower then \(vm.highestBid)"
+                    if lastValue <= vm.highestBid {
+                        convertedValueLabel.text = "cantBeLower".l10n() + " \(vm.highestBid)"
                         convertedValueLabel.textColor = .red
                         isEnable = false
                         let color: UIColor = .primaryDark.withAlphaComponent(0.8)
                         placeBidButton.backgroundColor = color
                     } else {
-                        convertedValueLabel.text = "Converted value: 1000 lei"
+                        convertedValueLabel.text = ""
                         convertedValueLabel.textColor = .textDark
                         isEnable = true
                         placeBidButton.backgroundColor = .primaryLight

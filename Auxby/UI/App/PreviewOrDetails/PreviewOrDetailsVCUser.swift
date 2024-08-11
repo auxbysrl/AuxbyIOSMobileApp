@@ -69,7 +69,7 @@ extension PreviewOrDetailsVC {
     
     func setBidsLabelUser(_ offer: OfferDetails) {
         var price = offer.highestBid == 0 ? Int(offer.price) : Int(offer.highestBid!)
-        highestBidLabel.text = "\(price.formattedString)\(offer.currencyType!.getCurrency)"
+        highestBidLabel.text = "\(price.formattedString)\(offer.currencySymbol ?? "")"
         price = 0
         offer.bids?.forEach{
             if let user = vm.user {
@@ -83,7 +83,7 @@ extension PreviewOrDetailsVC {
         }
         let color: UIColor = price == 0 ? .primaryLight : price == Int(offer.highestBid!) ? .green : .red
         yourBidLabel.textColor = color
-        yourBidLabel.text = price == 0 ? "-" : "\(price.formattedString)\(offer.currencyType!.getCurrency)"
+        yourBidLabel.text = price == 0 ? "-" : "\(price.formattedString)\(offer.currencySymbol ?? "")"
     }
     
     func setImagesUser(_ offer: OfferDetails) {
@@ -112,13 +112,7 @@ extension PreviewOrDetailsVC {
             priceView.isHidden = true
         } else {
             bidView.isHidden = true
-            var currency = ""
-            switch offer.currencyType {
-            case "EURO" : currency = "€"
-            case "DOLAR": currency = "$"
-            default: currency = "lei"
-            }
-            priceLabel.text = Int(offer.price).formattedString + (currency)
+            priceLabel.text = Int(offer.price).formattedString + (offer.currencySymbol ?? "")
         }
     }
     

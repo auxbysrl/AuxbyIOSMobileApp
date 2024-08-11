@@ -33,7 +33,7 @@ class AddOfferVM {
     var location = ""
     var phone = ""
     var description = ""
-    var currency = CurrencyType.ron
+    var currency = "RON"
     var condition = ConditionType.new
     var offerType = OfferType.fixPrice
     var details: [NewOffer.Values] = []
@@ -76,7 +76,7 @@ class AddOfferVM {
             // Add boundary string
             body.append("--\(boundary)\r\n".data(using: .utf8)!)
             for image in images {
-                guard let imageData = compressImage(image, maxFileSize: 6 * 1024 * 1024) else {
+                guard let imageData = ImageCompresser().compressImage(image) else {
                     continue
                 }
                 // Add boundary string
@@ -97,10 +97,22 @@ class AddOfferVM {
             let task = session.dataTask(with: request) { data, response, error in
                 if let error = error {
                     print("Error sending request: \(error.localizedDescription)")
+                    runOnMainThread {
+                        UIAlert.showOneButton(message: "errorImages".l10n()) {
+                            topVC().popVC()
+                            self.imagesAdded?()
+                        }
+                    }
                     return
                 }
                 guard let httpResponse = response as? HTTPURLResponse else {
                     print("Invalid response")
+                    runOnMainThread {
+                        UIAlert.showOneButton(message: "errorImages".l10n()) {
+                            topVC().popVC()
+                            self.imagesAdded?()
+                        }
+                    }
                     return
                 }
                 if httpResponse.statusCode == 200 {
@@ -109,28 +121,18 @@ class AddOfferVM {
                         self.imagesAdded?()
                     }
                 } else {
-                    UIAlert.showOneButton(message: "errorImages".l10n()) {
-                        runOnMainThread {
-                            topVC().popVC()
-                            self.imagesAdded?()
+                    runOnMainThread {
+                        UIAlert.showOneButton(message: "errorImages".l10n()) {
+                            runOnMainThread {
+                                topVC().popVC()
+                                self.imagesAdded?()
+                            }
                         }
                     }
                 }
             }
             task.resume()
         }
-    }
-    
-    func compressImage(_ image: UIImage, maxFileSize: Int) -> Data? {
-        var compression: CGFloat = 0.9
-        var imageData = image.jpegData(compressionQuality: compression)
-        
-        while let data = imageData, data.count > maxFileSize && compression > 0.1 {
-            compression -= 0.1
-            imageData = image.jpegData(compressionQuality: compression)
-        }
-        
-        return imageData
     }
 }
 
@@ -142,19 +144,6 @@ enum OfferType {
             return "Auction"
         case .fixPrice:
             return "Fix price"
-        }
-    }
-}
-
-enum CurrencyType: String {
-    case ron
-    case euro
-    var type: String {
-        switch self {
-        case .ron:
-            return "Ron"
-        case .euro:
-            return "Euro"
         }
     }
 }

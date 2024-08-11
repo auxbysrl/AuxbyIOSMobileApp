@@ -115,8 +115,13 @@ private extension FavoriteVC {
             case .succeed(let notifications):
                 Offline.encode(notifications, key: .notifications)
                 setBell()
-            case .failed:
-                UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+            case .failed(let err):
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                }
             default: break
             }
         }.store(in: &vm.cancellables)
@@ -138,7 +143,12 @@ private extension FavoriteVC {
                 Offline.encode(offers, key: .favorites)
             case .failed(let err):
                 dummyView.isHidden = true
-                UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                }
                 print(err.localizedDescription)
             default: break
             }
@@ -160,7 +170,12 @@ private extension FavoriteVC {
                     }
                 }
             case .failed(let err):
-                UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                }
                 print(err.localizedDescription)
             default: break
             }

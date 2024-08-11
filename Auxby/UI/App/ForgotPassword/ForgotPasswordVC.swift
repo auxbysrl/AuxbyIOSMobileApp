@@ -66,7 +66,12 @@ private extension ForgotPasswordVC {
                 }
             case.failed(let err):
                 mainButton.stopAnimation(animationStyle: .shake)
-                UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                }
                 print(err.localizedDescription)
             default: break
             }

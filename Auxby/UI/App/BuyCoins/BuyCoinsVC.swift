@@ -103,7 +103,12 @@ private extension BuyCoinsVC {
                 vm.getUser()
                
             case .failed(let err):
-                UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                }
                 print(err.localizedDescription)
             default: break
             }
@@ -114,13 +119,19 @@ private extension BuyCoinsVC {
             switch state {
             case.succeed(let user):
                 Offline.encode(user, key: .currentUser)
+                NotifyCenter.post(.updateUser)
                 if isModal {
                     dismissVC()
                 } else {
                     popVC()
                 }
             case .failed(let err):
-                UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                }
                 print(err.localizedDescription)
             default: break
             }

@@ -70,11 +70,11 @@ extension PreviewOrDetailsVC {
         reportButton.isHidden = true
         if offer.status == Offer.offerStatus.active.status {
             promoteButton.isHidden = offer.isPromoted
-            //shareButton.isHidden = false
+            shareButton.isHidden = false
             deleteButton.isHidden = true
         } else {
             promoteButton.isHidden = true
-            //shareButton.isHidden = true
+            shareButton.isHidden = true
             deleteButton.isHidden = false
         }
     }
@@ -129,9 +129,9 @@ extension PreviewOrDetailsVC {
     }
     
     func setBidsLabelOwner(_ offer: OfferDetails) {
-        highestBidLabel.text = "\(Int(offer.price).formattedString)\(offer.currencyType!.getCurrency)"
+        highestBidLabel.text = "\(Int(offer.price).formattedString)\(offer.currencySymbol ?? "")"
         yourBidLabel.textColor = .primaryLight
-        yourBidLabel.text = "\(Int(offer.highestBid!).formattedString)\(offer.currencyType!.getCurrency)"
+        yourBidLabel.text = "\(Int(offer.highestBid!).formattedString)\(offer.currencySymbol ?? "")"
         firstLabelForBid.text = "startingPrice".l10n()
         secondLabelForBid.text = "highestBid".l10n()
     }

@@ -61,7 +61,7 @@ class AddOffersVC: UIViewController{
     
     // MARK: Private Properties
     private var selectedSubcategory: String = ""
-    private var maxPhotos: Int = 6
+    private var maxPhotos: Int = 8
     fileprivate var identifiers: [String] = []
     
     // MARK: Overriden Methods
@@ -182,10 +182,19 @@ class AddOffersVC: UIViewController{
                                    type: .intNamed(""),
                                    inputText: "",
                                    placeholder: "addOffer_price_placeholder".l10n())
-        priceInput.setupDropdown(dataSource: ["lei".l10n(),
-                                              "euro".l10n()])
+        var symbols: [String] = []
+        if let currencies = Offline.decode(key: .currencies, type: [Currency].self) {
+            for currency in currencies {
+                symbols.append(currency.symbol)
+            }
+        }
+        priceInput.setupDropdown(dataSource: symbols)
         priceInput.actionAfterSet = { [unowned self] in
-            vm.currency = priceInput.selectedDropdownOption == "lei".l10n() ? .ron : .euro
+            if let currencies = Offline.decode(key: .currencies, type: [Currency].self) {
+                if let currentCurrency = currencies.first(where: { $0.symbol == priceInput.selectedDropdownOption }) {
+                    vm.currency = currentCurrency.name
+                }
+            }
         }
         
         conditionInput.setup(sectionLabel: "addOffer_condition".l10n(),
@@ -249,7 +258,7 @@ class AddOffersVC: UIViewController{
                 newOffer.requiredCoins = vm.category.addOfferCost
             }
             newOffer.offerType = vm.offerType.type
-            newOffer.currencyType = vm.currency.type
+            newOffer.currencyType = vm.currency
             newOffer.conditionType = vm.condition.type
             newOffer.contactInfo = NewOffer.ContactInfo(location: vm.location, phoneNumber: vm.phone)
             newOffer.categoryDetails = vm.details
@@ -300,7 +309,13 @@ class AddOffersVC: UIViewController{
                     popVC()
                 }
             case .failed(let err):
-                UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                indicator = nil
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                }
                 print(err.localizedDescription)
             default: break
             }

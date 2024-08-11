@@ -63,14 +63,14 @@
                                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noPhotoImage" translatesAutoresizingMaskIntoConstraints="NO" id="om9-K3-bk9">
                                                                             <rect key="frame" x="0.0" y="0.0" width="393" height="257"/>
                                                                         </imageView>
-                                                                        <visualEffectView opaque="NO" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R9i-nQ-FDf">
+                                                                        <visualEffectView opaque="NO" alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R9i-nQ-FDf">
                                                                             <rect key="frame" x="0.0" y="0.0" width="393" height="257"/>
                                                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="m7T-MK-Wjy">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="393" height="257"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             </view>
-                                                                            <blurEffect style="systemThickMaterialDark"/>
+                                                                            <blurEffect style="systemUltraThinMaterialDark"/>
                                                                             <userDefinedRuntimeAttributes>
                                                                                 <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
                                                                                     <real key="value" value="0.0"/>
@@ -460,6 +460,7 @@
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
                                                                                 </subviews>
+                                                                                <color key="backgroundColor" name="background"/>
                                                                             </stackView>
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LU7-eV-34S">
                                                                                 <rect key="frame" x="16" y="48" width="192.33333333333334" height="25"/>
@@ -1099,7 +1100,7 @@
                                             <visualEffectView opaque="NO" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o6v-mh-Phy">
                                                 <rect key="frame" x="0.0" y="0.0" width="393" height="340.66666666666669"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="fVs-4Z-pib">
-                                                    <rect key="frame" x="0.0" y="0.0" width="393" height="340.66666666666669"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="393" height="341"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </view>
@@ -1268,7 +1269,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="11N-Y6-tgN">
-                                                <rect key="frame" x="68" y="77" width="0.0" height="0.0"/>
+                                                <rect key="frame" x="68" y="61" width="32" height="32"/>
                                                 <subviews>
                                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HCC-3O-xf7" userLabel="Promote Button">
                                                         <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
@@ -1287,7 +1288,7 @@
                                                             <action selector="promoteOffer:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="zki-r1-NPu"/>
                                                         </connections>
                                                     </button>
-                                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fQn-Bp-7eP">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fQn-Bp-7eP">
                                                         <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
                                                         <color key="backgroundColor" name="white"/>
                                                         <constraints>
@@ -1300,6 +1301,9 @@
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="fullRounded" value="YES"/>
                                                         </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="shareOffer:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="t9c-FU-uGc"/>
+                                                        </connections>
                                                     </button>
                                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MKj-q2-z6Q" userLabel="Delete Button">
                                                         <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
@@ -1321,7 +1325,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="HZG-Gc-Opw">
-                                                <rect key="frame" x="78" y="61" width="299" height="32"/>
+                                                <rect key="frame" x="110" y="61" width="267" height="32"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tPW-QF-bJB">
                                                         <rect key="frame" x="5" y="0.0" width="32" height="32"/>
@@ -1343,7 +1347,7 @@
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QXV-4d-Cb0">
-                                                        <rect key="frame" x="37" y="0.0" width="252" height="32"/>
+                                                        <rect key="frame" x="37" y="0.0" width="220" height="32"/>
                                                         <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="16"/>
                                                         <color key="textColor" name="textDark"/>
                                                         <nil key="highlightedColor"/>

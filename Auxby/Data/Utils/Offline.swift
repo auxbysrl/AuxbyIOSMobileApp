@@ -13,6 +13,7 @@ enum OfflineKey {
     case categories, offers, language, onboardingSeen, categoryDetails, favorites
     case currentUser, userOffers, userBids, shouldReloadProfilePicture, currentSearch
     case notifications, isNoInternetPresented, filteredOffers, readedChats, apnsToken, promotedOffers
+    case currencies, offerIdFromURL, currentAdd
     
     // The key used to store offline the associated object
     var key: String {

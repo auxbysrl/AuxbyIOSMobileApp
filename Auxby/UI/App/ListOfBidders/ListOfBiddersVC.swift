@@ -40,7 +40,7 @@ extension ListOfBiddersVC: UICollectionViewDelegate, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BidCVCell.className, for: indexPath) as! BidCVCell
-        cell.setCell(bid: vm.bids[indexPath.row], currencyType: vm.currencyType)
+        cell.setCell(bid: vm.bids[indexPath.row], currencySymbol: vm.currencySymbol)
         return cell
 }
     

@@ -17,6 +17,7 @@ class PreviewOrDetailsVM {
     var offer: OfferDetails?
     var newOffer: NewOffer?
     var user: User?
+    var id: Int?
     var needToView = true
     var isFirstTime = true
     @Published private(set) var getOfferState = RequestState<OfferDetails>.idle
@@ -26,6 +27,7 @@ class PreviewOrDetailsVM {
     @Published private(set) var getDeleteOfferState = RequestState<Bool>.idle
     @Published private(set) var getAddToFavoriteState = RequestState<SuccessResponse>.idle
     @Published private(set) var getStartNewChat = RequestState<Chat>.idle
+    @Published private(set) var getDeepLinkState = RequestState<OfferDeepLink>.idle
     var categoriesDetails: [CategoryDetails] = []
     var cancellables: Set<AnyCancellable> = []
     var photos: [UIImage] = []
@@ -33,15 +35,24 @@ class PreviewOrDetailsVM {
     var activatePrice = 0
     var currentImage = 0
     
-    init(offer: Offer? = nil , newOffer: NewOffer? = nil) {
-        isNewOffer = offer == nil
+    init(offer: Offer? = nil , newOffer: NewOffer? = nil, id: Int? = nil) {
+        isNewOffer = newOffer != nil
         offerPreview = offer
+        self.id = id
         self.newOffer = newOffer
         user = Offline.currentUser
         if let offer = offer {
             if let cat = Offline.decode(key: .categoryDetails, type: [CategoryDetails].self)?.first(where: { $0.id == offer.categoryId}) {
                 activatePrice = cat.addOfferCost
             }
+        }
+    }
+    
+    func getDeepLink() {
+        if let offer = offer {
+            getDeepLinkState = .loading
+            Network.shared.request(endpoint: .getDeepLink(offerID: offer.id))
+                .assign(to: &$getDeepLinkState)
         }
     }
     
@@ -71,6 +82,11 @@ class PreviewOrDetailsVM {
         if let offer = offer {
             getOfferState = .loading
             Network.shared.request(endpoint: .getOfferBy(id: offer.id, increaseView: needToView))
+                .assign(to: &$getOfferState)
+        }
+        if let id = id {
+            getOfferState = .loading
+            Network.shared.request(endpoint: .getOfferBy(id: id, increaseView: needToView))
                 .assign(to: &$getOfferState)
         }
     }
@@ -121,9 +137,10 @@ class PreviewOrDetailsVM {
         // Add boundary string
         body.append("--\(boundary)\r\n".data(using: .utf8)!)
         for image in images {
-            guard let imageData = image.jpegData(compressionQuality: 0.8) else {
+            guard let imageData = ImageCompresser().compressImage(image) else {
                 continue
             }
+
             // Add boundary string
             body.append("--\(boundary)\r\n".data(using: .utf8)!)
             // Add content disposition header
@@ -142,12 +159,18 @@ class PreviewOrDetailsVM {
         let task = session.dataTask(with: request) { data, response, error in
             if let error = error {
                 print("Error sending request: \(error.localizedDescription)")
-                self.publishedAction?()
+                UIAlert.showOneButton(message: "errorImages".l10n())
+                runOnMainThread {
+                    self.publishedAction?()
+                }
                 return
             }
             guard let httpResponse = response as? HTTPURLResponse else {
                 print("Invalid response")
-                self.publishedAction?()
+                UIAlert.showOneButton(message: "errorImages".l10n())
+                runOnMainThread {
+                    self.publishedAction?()
+                }
                 return
             }
             if httpResponse.statusCode == 200 {
@@ -156,7 +179,9 @@ class PreviewOrDetailsVM {
                 }
             } else {
                 UIAlert.showOneButton(message: "errorImages".l10n())
-                self.publishedAction?()
+                runOnMainThread {
+                    self.publishedAction?()
+                }
             }
         }
         task.resume()

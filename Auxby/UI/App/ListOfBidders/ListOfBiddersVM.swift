@@ -10,11 +10,11 @@ import Foundation
 class ListOfBiddersVM {
     // MARK: - Public properties
     var bids: [Bid]
-    var currencyType: String
+    var currencySymbol: String
     
     // MARK: Overriden Methods
-    init(bids: [Bid], currencyType: String) {
+    init(bids: [Bid], currencySymbol: String) {
         self.bids = bids
-        self.currencyType = currencyType
+        self.currencySymbol = currencySymbol
     }
 }

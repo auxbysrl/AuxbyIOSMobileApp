@@ -14,6 +14,7 @@ class TabBarVC: UIViewController {
     // MARK: - IBOutlets
     @IBOutlet private weak var containerView: UIView!
     @IBOutlet private  var tabBarButtons: [UIButton]!
+    @IBOutlet weak var addView: AddView!
     
     // MARK: - Public properties
     private(set) static var instance: TabBarVC!
@@ -26,6 +27,7 @@ class TabBarVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setView()
+        setObservable()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,6 +61,7 @@ class TabBarVC: UIViewController {
         categoriesVC.vm.categoriesDetails = newCategories
         categoriesVC.vm.filtredCategoriesDetails = newCategories
         pushVC(categoriesVC)
+        
     }
     
     func goToChat() {
@@ -72,6 +75,63 @@ private extension TabBarVC {
         NotificationCenter.default.addObserver(
             self, selector: #selector(onLanguageChanged), name: .L10nLanguageChanged, object: nil
         )
+        delay(5) {
+            self.vm.getAdd()
+        }
+    }
+    
+    func displayAdd(_ add: AddDetails) {
+        addView.set(content: add.add.text, imageURL: add.add.image, showAdd: add.add.categoryId != nil)
+        addView.isHidden = add.hasSeen
+        addView.goToAdd = { [unowned self] in
+            addView.isHidden = true
+            if let _ = Offline.currentUser {
+                add.hasSeen = true
+                Offline.encode(add, key: .currentAdd)
+                if let categoryId = add.add.categoryId {
+                    if let currentCategories = Offline.decode(key: .categoryDetails, type: [CategoryDetails].self), let index = currentCategories.firstIndex(where: {  $0.id == categoryId }) {
+                        guard let addOfferVC = AddOffersVC.asVC(storyboardName: "Offers") as? AddOffersVC else { return }
+                        addOfferVC.vm = AddOfferVM(category: currentCategories[index])
+                        pushVC(addOfferVC)
+                    }
+                }
+            } else {
+                presentVC(GuestModeVC.asVC())
+            }
+           
+        }
+        addView.close = { [unowned self] in
+            addView.isHidden = true
+        }
+    }
+    
+    func setObservable() {
+        vm.$getAddState.sink { [unowned self] state in
+            switch state {
+            case .succeed(let adds):
+                if !adds.isEmpty {
+                    if let curentAdd = Offline.decode(key: .currentAdd, type: AddDetails.self) {
+                        if curentAdd.add.code == adds[0].code {
+                            curentAdd.add.image = adds[0].image
+                            curentAdd.add.text = adds[0].text
+                            Offline.encode(curentAdd, key: .currentAdd)
+                            displayAdd(curentAdd)
+                        } else {
+                            Offline.encode(AddDetails(add: adds[0]), key: .currentAdd)
+                            displayAdd(AddDetails(add: adds[0]))
+                        }
+                        
+                    } else {
+                        Offline.encode(AddDetails(add: adds[0]), key: .currentAdd)
+                        displayAdd(AddDetails(add: adds[0]))
+                    }
+                   
+                }
+            case.failed(let err):
+                print(err)
+            default: break
+            }
+        }.store(in: &vm.cancellables)
     }
     
     func selectTag(_ tag: Int) {

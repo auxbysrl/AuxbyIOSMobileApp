@@ -97,6 +97,9 @@ class ProfileVC: UIViewController {
         pushVC(changePasswordVC)
     }
     
+    @IBAction func share(_ sender: UIButton) {
+        vm.getReferral()
+    }
     
 }
 private extension ProfileVC {
@@ -193,6 +196,38 @@ private extension ProfileVC {
     }
     
     func setObservable() {
+        vm.$getReferralState.sink { [unowned self] state in
+            state.setStateActivityIndicator(&indicator)
+            switch state {
+            case .succeed(let response):
+                guard let url = URL(string: response.url) else {
+                    print("Invalid URL")
+                    return
+                }
+                
+                let activityViewController = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+                
+                // Exclude irrelevant activity types if necessary
+                activityViewController.excludedActivityTypes = [.addToReadingList, .assignToContact, .print]
+                
+                // For iPad, configure the popover presentation controller
+                if let popoverController = activityViewController.popoverPresentationController {
+                    popoverController.sourceView = self.view // Adjust sourceView to a relevant view in your app
+                    popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+                    popoverController.permittedArrowDirections = []
+                }
+                
+                self.present(activityViewController, animated: true, completion: nil)
+            case .failed(let err):
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                }
+            default: break
+            }
+        }.store(in: &vm.cancellables)
         
         vm.$getLogoutState.sink { [unowned self] state in
             state.setStateActivityIndicator(&indicator)

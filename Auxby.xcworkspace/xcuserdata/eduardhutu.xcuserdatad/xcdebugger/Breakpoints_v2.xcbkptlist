@@ -476,8 +476,8 @@
             filePath = "Auxby/UI/App/Profile/ProfileVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "180"
-            endingLineNumber = "180"
+            startingLineNumber = "183"
+            endingLineNumber = "183"
             landmarkName = "resetUserData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -620,8 +620,8 @@
             filePath = "Auxby/UI/App/Profile/ProfileVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
             landmarkName = "getUser()"
             landmarkType = "7">
          </BreakpointContent>
@@ -652,8 +652,8 @@
             filePath = "Auxby/UI/App/Profile/ProfileVM.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "113"
-            endingLineNumber = "113"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
             landmarkName = "updateUserImage(photo:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -826,8 +826,8 @@
             filePath = "Auxby/UI/App/PreviewOrDetails/PreviewOrDetailsVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "239"
-            endingLineNumber = "239"
+            startingLineNumber = "251"
+            endingLineNumber = "251"
             landmarkName = "goToSocial(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -899,32 +899,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A8930D9C-D53F-44C4-B77D-CD63C7A252C2"
+            uuid = "C776070B-DD53-45E1-8D81-B116372ED90D"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Auxby/UI/Components/AddView/AddView.swift"
+            filePath = "Auxby/SupportingFiles/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
-            landmarkName = "set(content:imageURL:showAdd:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "E87C78E9-B288-47FB-8AE8-44E8267F573E"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Auxby/UI/App/TabBar/TabBarVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
-            landmarkName = "displayAdd(_:)"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "application(_:didFinishLaunchingWithOptions:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

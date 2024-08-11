@@ -21,6 +21,7 @@ class OfferHeaderCell: UICollectionReusableView {
     // MARK: - Public properties
     var counter = 0
     var presentOneOffer:((Int) -> Void)?
+    var layout = CarrousellLayout()
     
     func setCell(categories: [Category], offers: [Offer], presentCategories: (() -> Void)?) {
         self.presentCategories = presentCategories
@@ -35,16 +36,42 @@ class OfferHeaderCell: UICollectionReusableView {
         categoriesCV.contentInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
         self.offers = offers
         carrusellCV.reloadData()
-        carrusellCV.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        carrusellCV.contentInset = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 30)
+        carrusellCV.collectionViewLayout = layout
+        carrusellCV.contentInsetAdjustmentBehavior = .never
+        carrusellCV.translatesAutoresizingMaskIntoConstraints = false
+        carrusellCV.decelerationRate = .fast
+        layout.scrollDirection = .horizontal
+        layout.itemSize.width = carrusellCV.frame.width * 0.5
+        layout.minimumLineSpacing = 30
     }
     
     func setTimer() {
         if offers.count > 0 {
-            carrusellCV.scrollToItem(at: IndexPath(row: counter, section: 0), at: .centeredHorizontally, animated: true)
-            if counter == offers.count - 1 {
-                counter = 0
+            if layout.currentPage == offers.count - 1 {
+                layout.currentPage = 0
             } else {
-                counter += 1
+                layout.currentPage += 1
+            }
+            carrusellCV.scrollToItem(at: IndexPath(row: layout.currentPage, section: 0), at: .centeredHorizontally, animated: true)
+            setBiggerCell()
+        }
+    }
+    
+    func setBiggerCell() {
+        for otherCell in carrusellCV.visibleCells {
+            if let indexPath = carrusellCV.indexPath(for: otherCell) {
+                if indexPath.item != layout.currentPage {
+                    UIView.animate(withDuration: 0.2) {
+                        otherCell.transform = .identity
+                    }
+                }
+            }
+        }
+        let indexPath = IndexPath(item: layout.currentPage, section: 0)
+        if let cell = carrusellCV.cellForItem(at: indexPath) {
+            UIView.animate(withDuration: 0.2) {
+                cell.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
             }
         }
     }
@@ -59,18 +86,9 @@ extension OfferHeaderCell: UICollectionViewDelegate, UICollectionViewDataSource,
         collectionView == categoriesCV ? categories.count : offers.count
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // Perform your specific action when scrolling occurs
-        guard let collectionView = scrollView as? UICollectionView else {
-            return
-        }
-        if collectionView == carrusellCV {
-            _ = CGRect(origin: collectionView.contentOffset, size: collectionView.bounds.size)
-            
-            guard let visibleIndexPath = collectionView.indexPathsForVisibleItems.first(where: { collectionView.bounds.contains(collectionView.layoutAttributesForItem(at: $0)?.frame ?? .zero) }) else {
-                return
-            }
-            counter = visibleIndexPath.row
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if decelerate {
+            setBiggerCell()
         }
     }
     
@@ -80,8 +98,14 @@ extension OfferHeaderCell: UICollectionViewDelegate, UICollectionViewDataSource,
             cell.setCell(category: categories[indexPath.row])
             return cell
         } else {
+            
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier:  CarrusellCell.className, for: indexPath) as! CarrusellCell
             cell.setCell(offer: offers[indexPath.row])
+            if indexPath.item == layout.currentPage {
+                cell.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+            } else {
+                cell.transform = .identity
+            }
             return cell
         }
     }
@@ -110,6 +134,6 @@ extension OfferHeaderCell: UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        collectionView == categoriesCV ? CGSize(width: 174, height: 92) : CGSize(width: collectionView.frame.width, height: collectionView.frame.height)
+        collectionView == categoriesCV ? CGSize(width: 174, height: 92) : CGSize(width: collectionView.frame.width * 0.5, height: collectionView.frame.height - 50)
     }
 }

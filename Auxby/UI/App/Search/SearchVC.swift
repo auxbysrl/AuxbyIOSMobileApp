@@ -7,6 +7,7 @@
 
 import UIKit
 import L10n_swift
+import NVActivityIndicatorView
 
 class SearchVC: UIViewController {
     // MARK: - IBOutlets
@@ -20,6 +21,8 @@ class SearchVC: UIViewController {
     @IBOutlet weak var searchedView: UIView!
     @IBOutlet weak var filterButton: UIButton!
     @IBOutlet weak var noOffersSecondLabel: UILabel!
+    @IBOutlet weak var loaderView: UIView!
+    @IBOutlet weak var Loader: NVActivityIndicatorView!
     
     // MARK: - Public properties
     var vm = SearchVM()
@@ -202,13 +205,13 @@ extension SearchVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
             cell.setCell(search: vm.serchedText, category: categoryOfSearch!, numberOfSearch: numberOfResults!)
             return cell
         } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OfferCell.className, for: indexPath) as! OfferCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SmallOfferCell.className, for: indexPath) as! SmallOfferCell
         cell.setCell(offer:  vm.searchedOffers[indexPath.row], addToFav: { [unowned self] in
             if Offline.currentUser != nil {
                 let offer =  vm.searchedOffers[indexPath.row]
                 vm.addOrRemoveFromFavorite(id: offer.id)
             }
-        }, viewOffers: nil, showUsers: nil)
+        }, viewOffers: nil, showUsers: nil, isLeft: indexPath.row % 2 == 0)
             return cell
         }
     }
@@ -247,7 +250,7 @@ extension SearchVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         if collectionView == cv {
            return CGSize(width: collectionView.frame.width, height: 63)
         } else {
-           return CGSize(width: UIScreen.main.bounds.width - 32, height: 280)
+           return CGSize(width: collectionView.frame.width / 2 - 4, height: 180)
         }
     }
 }

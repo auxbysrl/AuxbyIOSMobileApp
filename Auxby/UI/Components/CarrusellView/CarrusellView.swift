@@ -17,6 +17,7 @@ class CarrusellView: UIView {
     @IBOutlet weak var offerImage: UIImageView!
     @IBOutlet weak var priceType: UILabel!
     @IBOutlet weak var promotedView: UIView!
+    @IBOutlet weak var titleTrailingConstraint: NSLayoutConstraint!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,6 +33,7 @@ class CarrusellView: UIView {
         titleLabel.text = offer.title
         descriptionLabel.text = offer.description
         promotedView.isHidden = !offer.isPromoted
+        titleTrailingConstraint.constant = offer.isPromoted ? 96: 16
         if offer.photos!.isEmpty {
             offerImage.image = UIImage(named: "noPhotoImage")
         } else {

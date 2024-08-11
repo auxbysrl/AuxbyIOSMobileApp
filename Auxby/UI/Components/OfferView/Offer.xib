@@ -370,7 +370,7 @@
                 <constraint firstItem="ZZ7-Tc-COm" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="npd-SD-0mi"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <point key="canvasLocation" x="282.44274809160305" y="-77.816901408450704"/>
+            <point key="canvasLocation" x="5" y="-64"/>
         </view>
     </objects>
     <resources>

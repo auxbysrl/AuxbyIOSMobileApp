@@ -17,14 +17,16 @@ class SettingsVC: UIViewController {
     @IBOutlet private var profileLabels: [UILabel]!
     @IBOutlet private var labelsTypes: [UILabel]!
     @IBOutlet private weak var dropDown: DropDownView!
+    @IBOutlet weak var newsLetterButton: UIButton!
     
     // MARK: - Public properties
     var vm = SettingsVM()
-
+    var indicator: ActivityIndicator?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setView()
-
+        
     }
     
     @IBAction func back(_ sender: UIButton) {
@@ -42,15 +44,49 @@ class SettingsVC: UIViewController {
         }?.isHidden = !vm.isEditing
         setDisable(senderTag: sender.tag, isEnable: vm.isEditing)
     }
+    
+    @IBAction func checkOrUncheckNewsletter(_ sender: UIButton) {
+        vm.changeSubscription()
+    }
+    
 }
 
 private extension SettingsVC{
     func setView() {
         setProfilePhoto()
+        setNewsletter()
         NotificationCenter.default.addObserver(
             self, selector: #selector(onLanguageChanged), name: .L10nLanguageChanged, object: nil
         )
-       setDropDown()
+        setDropDown()
+        setObservable()
+    }
+    
+    func setNewsletter() {
+        let imageName = vm.user.isSubscribedToNewsletter ? "FilledCheck" : "EmptyCheck"
+        newsLetterButton.setImage(UIImage(named: imageName), for: .normal)
+    }
+    
+    func setObservable() {
+        vm.$getChangeSubscriptionState.sink { [unowned self] state in
+            state.setStateActivityIndicator(&indicator)
+            switch state {
+            case .succeed(let response):
+                if response.successful {
+                    vm.user.isSubscribedToNewsletter.toggle()
+                    setNewsletter()
+                    Offline.encode(vm.user, key: .currentUser)
+                }
+            case .failed(let err):
+                if err.errorStatus == 403 {
+                    UIAlert.showOneButton(message: "expireToken".l10n())
+                    
+                } else {
+                    UIAlert.showOneButton(message: "somethingWentWrong".l10n())
+                }
+            default: break
+            }
+        }.store(in: &vm.cancellables)
     }
     
     @objc func onLanguageChanged() {
@@ -83,7 +119,7 @@ private extension SettingsVC{
         }
         profileLabels.first { $0.tag == 0}?.text = L10n.shared.language.getCountryFromCode()
     }
-
+    
     func setDisable(senderTag: Int, isEnable: Bool) {
         editButtons.forEach {
             if isEnable {

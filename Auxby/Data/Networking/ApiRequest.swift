@@ -12,7 +12,7 @@ import UIKit
 enum ApiRequest {
     
     /// The base URL for all the requests
-    static let isProduction = false
+    static let isProduction = true
     static let baseURL = isProduction ? "auxby.ro" : "auxby.hypercode.ro"
     static let baseURLForOffers = isProduction ? "auxby.ro" : "auxby.hypercode.ro"
   
@@ -31,6 +31,8 @@ enum ApiRequest {
     case saveApnsToken
     case changePassword(oldPassword: String, newPassword: String)
     case finishTransaction(coins: String, price: String, productName: String)
+    case changeSubscriptionStatus
+    case getReferralLink
     
     // CATEGORIES
     case getCategories
@@ -70,13 +72,15 @@ enum ApiRequest {
     case deleteNotification(id: Int)
     case getCurrencies
     case getAdds
+    case checkAllowRating(userName: String)
+    case rateUser(userName: String, rating: Int)
     
     /// API method
     var method: HTTPMethod {
         switch self {
-        case .login, .forgotPassword, .create, .resendLink, .addOffer, .placeBid, .addOrRemoveFavorite, .loginGoogle, .reportOffer, .searchOffers, .searchOffersWithFilter, .startNewChat, .sendMessage, .saveApnsToken, .logout, .finishTransaction, .promoteOffer, .loginApple:
+        case .login, .forgotPassword, .create, .resendLink, .addOffer, .placeBid, .addOrRemoveFavorite, .loginGoogle, .reportOffer, .searchOffers, .searchOffersWithFilter, .startNewChat, .sendMessage, .saveApnsToken, .logout, .finishTransaction, .promoteOffer, .loginApple, .rateUser:
             return .post
-        case .updateUser, .editOffer, .changeStatus, .changePassword:
+        case .updateUser, .editOffer, .changeStatus, .changePassword, .changeSubscriptionStatus:
             return .put
         case .delete, .deleteOffer, .deleteNotification:
             return .delete
@@ -88,6 +92,10 @@ enum ApiRequest {
     /// API path
     var path: String {
         switch self {
+        case .getReferralLink: return "/api/v1/user/referral-link"
+        case .changeSubscriptionStatus: return "/api/v1/user/change-subscription-status"
+        case .rateUser: return "/api/v1/user/rate"
+        case .checkAllowRating: return "/api/v1/user/allow-rating"
         case .getAdds: return "/api/v1/ads"
         case .getDeepLink(let offerID): return "/api/v1/product/generate-deep-link/\(offerID)"
         case .getCurrencies: return "/api/v1/application/currencies"
@@ -146,16 +154,32 @@ enum ApiRequest {
             ]
             
         case .loginGoogle(let token):
-            return [
-                "token": token
-            ]
+            if let referralId = Offline.decode(key: .referralId, type: Int.self) {
+                return [
+                    "token": token,
+                    "userReferralId": referralId
+                ]
+            } else {
+                return [
+                    "token": token
+                ]
+            }
             
         case .loginApple(let authCode, let firstName, let lastName):
-            return [
-                "authorizationCode": authCode,
-                "firstName": firstName,
-                "lastName": lastName
-            ]
+            if let referralId = Offline.decode(key: .referralId, type: Int.self) {
+                return [
+                    "authorizationCode": authCode,
+                    "firstName": firstName,
+                    "lastName": lastName,
+                    "userReferralId": referralId
+                ]
+            } else {
+                return [
+                    "authorizationCode": authCode,
+                    "firstName": firstName,
+                    "lastName": lastName
+                ]
+            }
             
         case .changePassword(let oldPassword, let newPassword):
             return [
@@ -170,17 +194,40 @@ enum ApiRequest {
             ]
             
         case .create(let user, let password):
+            if let referralId = Offline.decode(key: .referralId, type: Int.self) {
+                return [
+                    "lastName": user.lastName,
+                    "firstName": user.firstName,
+                    "email": user.email,
+                    "address":
+                        [ "city": user.address.city,
+                          "country": user.address.country
+                        ]
+                    ,
+                    "phone": user.phone,
+                    "password": password,
+                    "userReferralId": referralId
+                ]
+            } else {
+                return [
+                    "lastName": user.lastName,
+                    "firstName": user.firstName,
+                    "email": user.email,
+                    "address":
+                        [ "city": user.address.city,
+                          "country": user.address.country
+                        ]
+                    ,
+                    "phone": user.phone,
+                    "password": password
+                ]
+            }
+            
+        case .rateUser(let userName, let rating):
             return [
-                "lastName": user.lastName,
-                "firstName": user.firstName,
-                "email": user.email,
-                "address":
-                    [ "city": user.address.city,
-                      "country": user.address.country
-                    ]
-                ,
-                "phone": user.phone,
-                "password": password
+                "username": userName,
+                "rate": rating
+                
             ]
             
         case .updateUser(let user):
@@ -293,6 +340,11 @@ enum ApiRequest {
                 URLQueryItem(name: "sort", value: "publishDate,DESC")
             ]
             
+        case .checkAllowRating(let userName):
+            return [
+                URLQueryItem(name: "username", value: userName)
+            ]
+            
         case .getOwnerOffers(let email, let page):
             return [
                 URLQueryItem(name: "page", value: "\(page)"),
@@ -324,7 +376,7 @@ enum ApiRequest {
         var host = ""
         var port = 0
         switch self {
-        case .getUserChats, .getMessages, .startNewChat, .sendMessage, .loginGoogle, .login, .create, .resendLink, .forgotPassword, .getAllNotifications, .deleteNotification, .getCategoriesDetails, .changePassword, .updateUser, .checkEmail, .getUser, .delete, .saveApnsToken, .logout, .finishTransaction, .reportOffer, .getCurrencies, .loginApple, .getAdds:
+        case .getUserChats, .getMessages, .startNewChat, .sendMessage, .loginGoogle, .login, .create, .resendLink, .forgotPassword, .getAllNotifications, .deleteNotification, .getCategoriesDetails, .changePassword, .updateUser, .checkEmail, .getUser, .delete, .saveApnsToken, .logout, .finishTransaction, .reportOffer, .getCurrencies, .loginApple, .getAdds, .checkAllowRating, .rateUser, .changeSubscriptionStatus, .getReferralLink:
             host = ApiRequest.baseURL
             port = 8080
         default: 

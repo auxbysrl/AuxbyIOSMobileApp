@@ -325,7 +325,7 @@ extension OffersVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OfferCell.className, for: indexPath) as! OfferCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SmallOfferCell.className, for: indexPath) as! SmallOfferCell
         cell.setCell(offer: vm.offers[indexPath.row], addToFav: { [unowned self] in
             if Offline.currentUser != nil {
                 let offer = vm.offers[indexPath.row]
@@ -333,7 +333,7 @@ extension OffersVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
             } else {
                 presentVC(GuestModeVC.asVC())
             }
-        }, viewOffers: nil, showUsers: nil)
+        }, viewOffers: nil, showUsers: nil, isLeft: indexPath.row % 2 == 0)
             return cell
     }
     
@@ -344,7 +344,7 @@ extension OffersVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 280)
+        return CGSize(width: collectionView.frame.width / 2 - 4, height: 180)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -354,7 +354,7 @@ extension OffersVC: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         if offsetY > (contentHeight - height + 100 ) {
             loaderView.isHidden = !vm.isLoading
         }
-        if offsetY > (contentHeight - height - 400) {
+        if offsetY > (contentHeight - height - 200) {
             if !vm.isLoading {
                 if vm.currentPage < vm.totalPages - 1 {
                     vm.isLoading = true

@@ -85,6 +85,7 @@ class PreviewOrDetailsVC: UIViewController {
     @IBOutlet weak var winnerActive: UILabel!
     @IBOutlet weak var reportButton: UIButton!
     @IBOutlet weak var promoteButton: UIButton!
+    @IBOutlet var stars: [UIButton]!
     
     
     // MARK: - Public properties
@@ -154,18 +155,29 @@ class PreviewOrDetailsVC: UIViewController {
     }
     
     @IBAction func goToReview(_ sender: UIButton) {
-        if let user = Offline.decode(key: .currentUser, type: User.self) {
-            if !vm.isNewOffer {
-                if let offer = vm.offer, let owner = offer.owner, let userName = owner.userName {
-                    if user.email != userName {
-                        let reviewVC = ReviewVC.asVC()
-                        presentVC(reviewVC)
+//        if let user = Offline.decode(key: .currentUser, type: User.self) {
+//            if !vm.isNewOffer {
+//                if let offer = vm.offer, let owner = offer.owner, let userName = owner.userName {
+//                    if user.email != userName {
+//                        let reviewVC = ReviewVC.asVC()
+//                        presentVC(reviewVC)
+//                    }
+//                }
+//            }
+//        } else {
+//            presentVC(GuestModeVC.asVC())
+//        }
+        if let offer = vm.offer {
+            if let user = vm.user {
+                if offer.owner?.userName != user.email {
+                    if let owner = offer.owner {
+                        let userOffersVC = UserOffersVC.asVC() as! UserOffersVC
+                        userOffersVC.vm = UserOffersVM(owner: owner)
+                        pushVC(userOffersVC)
                     }
                 }
             }
-        } else {
-            presentVC(GuestModeVC.asVC())
-        }
+        } 
     }
     
     @IBAction func goToReport(_ sender: UIButton) {
@@ -804,8 +816,16 @@ private extension PreviewOrDetailsVC {
     func setOwner() {
         if let offer = vm.offer {
             setOwnerUser(offer)
+            stars.forEach {
+                let imageName = $0.tag <= offer.owner!.rating ? "starFilled" : "star"
+                $0.setImage(UIImage(named: imageName), for: .normal)
+            }
         } else if let owner = Offline.decode(key: .currentUser, type: User.self) {
             setOwnerNewOffer(owner)
+            stars.forEach {
+                let imageName = $0.tag <= owner.rating ? "starFilled" : "star"
+                $0.setImage(UIImage(named: imageName), for: .normal)
+            }
         }
     }
     

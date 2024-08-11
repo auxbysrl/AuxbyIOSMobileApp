@@ -17,6 +17,7 @@ class ProfileVM {
     @Published private(set) var updateUserState = RequestState<User>.idle
     @Published private(set) var getDeleteUser = RequestState<Void>.idle
     @Published private(set) var getLogoutState = RequestState<Void>.idle
+    @Published private(set) var getReferralState = RequestState<OfferDeepLink>.idle
     var cancellables: Set<AnyCancellable> = []
     var startAddingImage: (()->Void)?
     var finishAddingImage: (()->Void)?
@@ -26,6 +27,12 @@ class ProfileVM {
             self.user = user
         }
         getUser()
+    }
+    
+    func getReferral() {
+        getReferralState = .loading
+        Network.shared.request(endpoint: .getReferralLink)
+            .assign(to: &$getReferralState)
     }
     
     func getUser() {

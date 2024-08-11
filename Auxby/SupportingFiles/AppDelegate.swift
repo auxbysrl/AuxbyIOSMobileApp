@@ -37,6 +37,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
                 let offerDetailsVC = PreviewOrDetailsVC.asVC() as! PreviewOrDetailsVC
                 offerDetailsVC.vm = PreviewOrDetailsVM(id: offerId )
                 topVC().pushVC(offerDetailsVC)
+            } else if let userId = params!["$userId"] as? String {
+                if let _ = Offline.currentUser {
+                    
+                } else {
+                    Offline.encode(Int(userId), key: .referralId)
+                    topVC().pushVC(LoginVC.asVC())
+                }
             }
         })
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(notification:)), name: .reachabilityChanged, object: reachability)

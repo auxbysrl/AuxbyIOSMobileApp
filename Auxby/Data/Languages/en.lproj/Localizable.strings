@@ -285,3 +285,7 @@ Register an account or simply log in.";
 "bidWarningMessage" = "Auxby cannot be held responsible for the failure of sellers to fulfill their obligations in auctions.";
 "userDetails" = "User details";
 "failedEmail" = "Sign in failed. There may be an account with the same email!";
+"offerReview" = "Offer a review";
+"infoReview" = "To evaluate a seller, you must either have exchanged messages with them or not have already given a rating.";
+"share" = "Share";
+"shareLink" = "Invite friends";

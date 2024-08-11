@@ -19,5 +19,9 @@ struct SuccessResponse: Decodable {
     let message: String
 }
 
+struct SuccessResponseBool: Codable {
+    let successful: Bool
+}
+
 struct EmptyResponse: Decodable {
 }

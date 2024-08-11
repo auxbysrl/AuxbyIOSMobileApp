@@ -228,6 +228,10 @@
 		D3C73A4C2A08F23A00154432 /* ImagesSliderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C73A4B2A08F23A00154432 /* ImagesSliderVC.swift */; };
 		D3CAF18B29067D02007AADF2 /* UIAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CAF18A29067D02007AADF2 /* UIAlert.swift */; };
 		D3CAF1922907CB27007AADF2 /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CAF1912907CB27007AADF2 /* TabBarVC.swift */; };
+		D3CD55C52C33E18D002E848C /* SmallOfferView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D3CD55C42C33E18D002E848C /* SmallOfferView.xib */; };
+		D3CD55C72C33E19C002E848C /* SmallOfferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CD55C62C33E19C002E848C /* SmallOfferView.swift */; };
+		D3CD55CA2C33E819002E848C /* SmallOfferCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CD55C92C33E819002E848C /* SmallOfferCell.swift */; };
+		D3CD55CC2C3540E0002E848C /* CarrousellLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CD55CB2C3540E0002E848C /* CarrousellLayout.swift */; };
 		D3CE0A76292E038800A22B04 /* DrawerMenu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3CE0A75292E038800A22B04 /* DrawerMenu.storyboard */; };
 		D3CE0A78292E039F00A22B04 /* DrawerMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CE0A77292E039F00A22B04 /* DrawerMenuVC.swift */; };
 		D3CE0A7B292E0BA500A22B04 /* DrawerTransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CE0A7A292E0BA500A22B04 /* DrawerTransitionManager.swift */; };
@@ -491,6 +495,10 @@
 		D3C73A4B2A08F23A00154432 /* ImagesSliderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesSliderVC.swift; sourceTree = "<group>"; };
 		D3CAF18A29067D02007AADF2 /* UIAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlert.swift; sourceTree = "<group>"; };
 		D3CAF1912907CB27007AADF2 /* TabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
+		D3CD55C42C33E18D002E848C /* SmallOfferView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SmallOfferView.xib; sourceTree = "<group>"; };
+		D3CD55C62C33E19C002E848C /* SmallOfferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallOfferView.swift; sourceTree = "<group>"; };
+		D3CD55C92C33E819002E848C /* SmallOfferCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallOfferCell.swift; sourceTree = "<group>"; };
+		D3CD55CB2C3540E0002E848C /* CarrousellLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarrousellLayout.swift; sourceTree = "<group>"; };
 		D3CE0A75292E038800A22B04 /* DrawerMenu.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DrawerMenu.storyboard; sourceTree = "<group>"; };
 		D3CE0A77292E039F00A22B04 /* DrawerMenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerMenuVC.swift; sourceTree = "<group>"; };
 		D3CE0A7A292E0BA500A22B04 /* DrawerTransitionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerTransitionManager.swift; sourceTree = "<group>"; };
@@ -737,6 +745,7 @@
 				D3ECEEB029CB093A005544F0 /* NotifyCenter.swift */,
 				D3ECEEAE29CB011E005544F0 /* UpdateService.swift */,
 				D362E2E32C2589DD006778D0 /* ImageCompresser.swift */,
+				D3CD55CB2C3540E0002E848C /* CarrousellLayout.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -754,6 +763,8 @@
 		5352A17828F5924C00F04905 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				D3CD55C82C33E7E5002E848C /* SmallOfferCell */,
+				D3CD55C32C33E176002E848C /* SmallOfferView */,
 				D3BB96A72C2AA5F000F0EF32 /* AddView */,
 				D3C8103F2A309EB4000938BF /* Message */,
 				D3ECEEBB29D185BC005544F0 /* SegmentControl */,
@@ -1318,6 +1329,23 @@
 			path = TabBar;
 			sourceTree = "<group>";
 		};
+		D3CD55C32C33E176002E848C /* SmallOfferView */ = {
+			isa = PBXGroup;
+			children = (
+				D3CD55C42C33E18D002E848C /* SmallOfferView.xib */,
+				D3CD55C62C33E19C002E848C /* SmallOfferView.swift */,
+			);
+			path = SmallOfferView;
+			sourceTree = "<group>";
+		};
+		D3CD55C82C33E7E5002E848C /* SmallOfferCell */ = {
+			isa = PBXGroup;
+			children = (
+				D3CD55C92C33E819002E848C /* SmallOfferCell.swift */,
+			);
+			path = SmallOfferCell;
+			sourceTree = "<group>";
+		};
 		D3CE0A74292E02B000A22B04 /* DrawerMenu */ = {
 			isa = PBXGroup;
 			children = (
@@ -1643,6 +1671,7 @@
 				53D0826A28FFEA41002E2F8D /* Launch.storyboard in Resources */,
 				D31582212AD5826000501B0D /* Montserrat Thin Italic 250.ttf in Resources */,
 				D30F8A0E2A26292F001AD9FB /* DateMessage.xib in Resources */,
+				D3CD55C52C33E18D002E848C /* SmallOfferView.xib in Resources */,
 				D3D1C5D4290958BB006A2C77 /* Bids.storyboard in Resources */,
 				D31582302AD5826000501B0D /* Montserrat Black Italic 900.ttf in Resources */,
 				D3C73A4A2A08F22700154432 /* ImagesSlider.storyboard in Resources */,
@@ -1799,6 +1828,7 @@
 				D3ECEEC529D18C2B005544F0 /* ActiveOffersVC.swift in Sources */,
 				D3FBDFA629C45E7E00ED376A /* PreviewOrDetailsVCUser.swift in Sources */,
 				D3DEE5FA2C2163D800DB28E4 /* UserOffersVM.swift in Sources */,
+				D3CD55CA2C33E819002E848C /* SmallOfferCell.swift in Sources */,
 				53F3AA8C2900306A009B2224 /* PageControllerDataSource.swift in Sources */,
 				536C9A0D297695D200F15134 /* PhotoCVCell.swift in Sources */,
 				53D082D3290026D2002E2F8D /* OnboardingStepVC.swift in Sources */,
@@ -1925,6 +1955,7 @@
 				D3BB96AB2C2AA61F00F0EF32 /* AddView.swift in Sources */,
 				D30F8A122A262E7D001AD9FB /* UIScrollViewExt.swift in Sources */,
 				D3A6DB0929BF40F700664D8A /* ReviewVC.swift in Sources */,
+				D3CD55CC2C3540E0002E848C /* CarrousellLayout.swift in Sources */,
 				D3D457962A2609E30091009B /* ConversationVM.swift in Sources */,
 				D3D1C5D829095B23006A2C77 /* TabBarItem.swift in Sources */,
 				D3139ADC2939F60E00199DD4 /* ProfileVM.swift in Sources */,
@@ -1942,6 +1973,7 @@
 				D3AFD27D28FEBBA90067A019 /* Keychain.swift in Sources */,
 				D3414F952C0EE9DA009287E1 /* Currency.swift in Sources */,
 				D3ECEECB29D2C742005544F0 /* DrawerMenuVM.swift in Sources */,
+				D3CD55C72C33E19C002E848C /* SmallOfferView.swift in Sources */,
 				D35EA498291902B8007FA259 /* Category.swift in Sources */,
 				D3FBDFA829C45ECB00ED376A /* PreviewOrDetailsVCNewOffer.swift in Sources */,
 			);
@@ -2117,7 +2149,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Auxby/Data/Models/IAPHelper/openssl/openssl-lib",
 				);
-				MARKETING_VERSION = 1.16;
+				MARKETING_VERSION = 1.18;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Auxby;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2162,7 +2194,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Auxby/Data/Models/IAPHelper/openssl/openssl-lib",
 				);
-				MARKETING_VERSION = 1.16;
+				MARKETING_VERSION = 1.18;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Auxby;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

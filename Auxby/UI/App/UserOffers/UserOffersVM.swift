@@ -14,12 +14,19 @@ class UserOffersVM {
     var currentPage = 0
     var totalPages = 0
     var isLoading = true
+    @Published private(set) var getCheckReviewState = RequestState<Bool>.idle
     @Published private(set) var getUserOffers = RequestState<OfferResponse>.idle
     @Published private(set) var getAddToFavoriteState = RequestState<SuccessResponse>.idle
     var cancellables: Set<AnyCancellable> = []
     
     init(owner: Owner) {
         self.owner = owner
+    }
+    
+    func checkAllowRating() {
+        getCheckReviewState = .loading
+        Network.shared.request(endpoint: .checkAllowRating(userName: owner.userName ?? ""))
+            .assign(to: &$getCheckReviewState)
     }
     
     func addOrRemoveFromFavorite(id: Int) {

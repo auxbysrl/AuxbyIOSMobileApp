@@ -90,7 +90,6 @@
 	<array>
 		<string>auxby.app.link</string>
 		<string>auxby-alternate.app.link</string>
-		<string>auxby.test-app.link</string>
 	</array>
 </dict>
 </plist>

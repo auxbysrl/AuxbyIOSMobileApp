@@ -7,6 +7,7 @@
 
 import UIKit
 import NVActivityIndicatorView
+import L10n_swift
 
 class UserOffersVC: UIViewController {
     // MARK: - IBOutlets
@@ -16,9 +17,13 @@ class UserOffersVC: UIViewController {
     @IBOutlet weak var cv: UICollectionView!
     @IBOutlet weak var loaderView: UIView!
     @IBOutlet weak var Loader: NVActivityIndicatorView!
+    @IBOutlet weak var offerReviewButton: UIButton!
+    @IBOutlet weak var infoButton: UIButton!
+    @IBOutlet var stars: [UIButton]!
     
     // MARK: - Public properties
     var vm: UserOffersVM!
+    var indicator: ActivityIndicator?
     
     // MARK: Overriden Methods
     override func viewDidLoad() {
@@ -27,11 +32,27 @@ class UserOffersVC: UIViewController {
         setObservable()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        vm.checkAllowRating()
+        
+    }
+    
     // MARK: - IBActions
     @IBAction func back(_ sender: UIButton) {
         popVC()
     }
     
+    
+    @IBAction func goToReview(_ sender: UIButton) {
+        let reviewVC = ReviewVC.asVC() as! ReviewVC
+        reviewVC.vm = ReviewVM(userName: vm.owner.userName ?? "")
+        presentVC(reviewVC)
+    }
+    
+    @IBAction func infoReview(_ sender: UIButton) {
+        UIAlert.showOneButton(message: "infoReview".l10n())
+    }
 }
 // MARK: - Private Methods
 private extension UserOffersVC {
@@ -44,9 +65,26 @@ private extension UserOffersVC {
         }
         fullNameLabel.text = "\(vm.owner.lastName ?? "") \(vm.owner.firstName ?? "")"
         activeLabel.text = vm.owner.getActiveString()
+        stars.forEach {
+            let imageName = $0.tag <= vm.owner.rating ? "starFilled" : "star"
+            $0.setImage(UIImage(named: imageName), for: .normal)
+        }
     }
     
     func setObservable() {
+        vm.$getCheckReviewState.sink { [unowned self] state in
+            state.setStateActivityIndicator(&indicator)
+            switch state {
+            case .succeed(let isAllowed):
+                offerReviewButton.isHidden = !isAllowed
+                infoButton.isHidden = isAllowed
+            case .failed(let err):
+                print(err.localizedDescription)
+                offerReviewButton.isHidden = true
+                infoButton.isHidden = false
+            default: break
+            }
+        }.store(in: &vm.cancellables)
         vm.$getUserOffers.sink { [unowned self] state in
             switch state {
             case .succeed(let offersResponse):

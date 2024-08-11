@@ -283,3 +283,7 @@
 "bidWarningMessage" = "Auxby nu poate fi considerată responsabilă pentru neîndeplinirea obligațiilor de către vânzători în cadrul licitațiilor.";
 "userDetails" = "Detalii utilizator";
 "failedEmail" = "Autentificarea a eșuat. Este posibil sa existe deja un cont cu acest email!";
+"offerReview" = "Oferă un review";
+"infoReview" = "Pentru a evalua un vânzător, trebuie fie să fi avut un schimb de mesaje cu acesta, fie să nu fi acordat deja o evaluare.";
+"share" = "Distribuie";
+"shareLink" = "Invită prieteni";

@@ -115,6 +115,7 @@ class Owner: Codable {
     var phone: String?
     var avatarUrl: String?
     var lastSeen: String?
+    var rating: Int
     static let noProfilePhoto = "NoProfilePhoto"
     
     func getActiveString()-> String {

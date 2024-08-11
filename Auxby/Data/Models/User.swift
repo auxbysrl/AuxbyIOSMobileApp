@@ -11,6 +11,8 @@ class User: Codable {
     var avatar: String?
     var availableCoins: Int
     var isGoogleAccount: Bool
+    var isSubscribedToNewsletter: Bool
+    var rating: Int
     static let noProfilePhoto = "NoProfilePhoto"
     
     init() {
@@ -19,7 +21,9 @@ class User: Codable {
         email = ""
         phone = ""
         isGoogleAccount = false
+        isSubscribedToNewsletter = true
         availableCoins = 0
+        rating = 5
     }
 }
 
